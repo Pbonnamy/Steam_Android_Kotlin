@@ -10,14 +10,18 @@
     <string name="forgotPasswordTitle">Mot de passe oublié</string>
     <string name="forgotPasswordDetails">Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
 
+    <string name="bestSalesSubtitle"><u>Les meilleures ventes</u></string>
+
     <string name="emailHint">E-mail</string>
     <string name="passwordHint">Mot de passe</string>
     <string name="verifyPasswordHint">Vérification du mot de passe</string>
     <string name="usernameHint">Nom d\'utilisateur</string>
+    <string name="searchHint">Rechercher un jeu...</string>
 
     <string name="loginBtn">Se connecter</string>
     <string name="newAccountBtn">Créer un nouveau compte</string>
     <string name="subscribeBtn">S\'inscrire</string>
     <string name="forgotPasswordBtn"><u>Mot de passe oublié</u></string>
     <string name="sendForgotPasswordBtn">Renvoyer le mot de passe</string>
+    <string name="moreInformationsBtn">En savoir plus</string>
 </resources>

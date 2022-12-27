@@ -67,6 +67,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:drawableRight="@drawable/warning"
         android:hint="@string/passwordHint"
         android:gravity="center"
         android:background="@color/input"
