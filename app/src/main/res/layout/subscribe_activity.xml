@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/subscribeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subscribeTitle"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineT" />
+
+    <TextView
+        android:id="@+id/subscribeDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/subscribeDetails"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@id/guidelineTextL"
+        app:layout_constraintEnd_toEndOf="@id/guidelineTextR"
+        app:layout_constraintTop_toBottomOf="@id/subscribeTitle" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="@string/usernameHint"
+        android:gravity="center"
+        android:background="@color/input"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/subscribeDetails"
+        app:layout_constraintStart_toStartOf="@id/guidelineL"
+        app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="@string/emailHint"
+        android:gravity="center"
+        android:background="@color/input"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/username"
+        app:layout_constraintStart_toStartOf="@id/guidelineL"
+        app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="@string/passwordHint"
+        android:gravity="center"
+        android:background="@color/input"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/email"
+        app:layout_constraintStart_toStartOf="@id/guidelineL"
+        app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
+
+    <EditText
+        android:id="@+id/verifyPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="@string/verifyPasswordHint"
+        android:gravity="center"
+        android:background="@color/input"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintStart_toStartOf="@id/guidelineL"
+        app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
+
+    <Button
+        android:id="@+id/subscribe"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/subscribeBtn"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/primary"
+        android:padding="12dp"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/verifyPassword"
+        app:layout_constraintStart_toStartOf="@id/guidelineL"
+        app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineT"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineL"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineR"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTextL"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTextR"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

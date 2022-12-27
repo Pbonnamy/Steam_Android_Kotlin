@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Steam Like</string>
+
+    <string name="loginTitle">Bienvenue !</string>
+    <string name="loginDetails">Veuillez vous connecter ou créer un nouveau compte pour utiliser l\'application.</string>
+
+    <string name="subscribeTitle">Inscription</string>
+    <string name="subscribeDetails">Veuillez saisir ces différentes informations, afin que vos listes soients sauvegardées.</string>
+
+    <string name="emailHint">E-mail</string>
+    <string name="passwordHint">Mot de passe</string>
+    <string name="verifyPasswordHint">Vérification du mot de passe</string>
+    <string name="usernameHint">Nom d\'utilisateur</string>
+
+    <string name="loginBtn">Se connecter</string>
+    <string name="newAccountBtn">Créer un nouveau compte</string>
+    <string name="subscribeBtn">S\'inscrire</string>
+    <string name="forgotPasswordBtn"><u>Mot de passe oublié</u></string>
 </resources>
