@@ -7,6 +7,9 @@
     <string name="subscribeTitle">Inscription</string>
     <string name="subscribeDetails">Veuillez saisir ces différentes informations, afin que vos listes soients sauvegardées.</string>
 
+    <string name="forgotPasswordTitle">Mot de passe oublié</string>
+    <string name="forgotPasswordDetails">Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
+
     <string name="emailHint">E-mail</string>
     <string name="passwordHint">Mot de passe</string>
     <string name="verifyPasswordHint">Vérification du mot de passe</string>
@@ -16,4 +19,5 @@
     <string name="newAccountBtn">Créer un nouveau compte</string>
     <string name="subscribeBtn">S\'inscrire</string>
     <string name="forgotPasswordBtn"><u>Mot de passe oublié</u></string>
+    <string name="sendForgotPasswordBtn">Renvoyer le mot de passe</string>
 </resources>
