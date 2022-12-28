@@ -11,4 +11,7 @@
     <color name="input">#1E262C</color>
     <color name="primary">#636AF6</color>
     <color name="background">#1A2025</color>
+    <color name="background2">#1E262C</color>
+    <color name="bakgroundSeeThrough">#BF000000</color>
+    <color name="gold">#F5A623</color>
 </resources>

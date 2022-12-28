@@ -7,42 +7,39 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:drawableRight="@drawable/search"
-        android:drawableTint="@color/primary"
-        android:hint="@string/searchHint"
-        android:background="@color/input"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:padding="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineL"
-        app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
+    <ImageView
+        android:id="@+id/mainBackground"
+        android:layout_height="320dp"
+        android:layout_width="match_parent"
+        tools:srcCompat="@drawable/test_banner3"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/banner"
-        layout="@layout/main_banner"
-        android:layout_marginTop="15dp"
+        layout="@layout/game_banner"
+        android:layout_width="0dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="250dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guidelineL"
+        app:layout_constraintEnd_toEndOf="@id/guidelineR"/>
+
+    <androidx.viewpager.widget.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_main_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/banner">
 
-    <TextView
-        android:id="@+id/bestSalesTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bestSalesSubtitle"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/banner"
-        app:layout_constraintStart_toStartOf="@id/guidelineL"/>
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
+    </androidx.viewpager.widget.ViewPager>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineL"
