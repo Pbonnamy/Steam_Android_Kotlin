@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     app:cardCornerRadius="5dp"
-    android:layout_height="125dp">
+    android:layout_height="130dp">
 
     <ImageView
-        android:id="@+id/background"
+        android:id="@+id/bannerBackground"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         tools:srcCompat="@drawable/test_banner4"
@@ -28,7 +28,7 @@
 
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/bannerImage"
             android:layout_height="0dp"
             android:layout_width="75dp"
             tools:srcCompat="@drawable/test_game3"
@@ -50,8 +50,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="25dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image"
-            app:layout_constraintTop_toTopOf="@+id/image" />
+            app:layout_constraintStart_toEndOf="@+id/bannerImage"
+            app:layout_constraintTop_toTopOf="@+id/bannerImage" />
 
         <TextView
             android:id="@+id/editor"

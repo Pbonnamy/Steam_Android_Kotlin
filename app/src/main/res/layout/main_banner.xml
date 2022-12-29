@@ -6,12 +6,13 @@
     android:layout_height="200dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bannerLayout"
         android:layout_width="match_parent"
         tools:background="@drawable/test_banner1"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/bannerTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -28,7 +29,7 @@
             app:layout_constraintTop_toTopOf="@id/guidelineT" />
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/bannerDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -43,7 +44,7 @@
             tools:text="Une description d'un jeu mis en avant (peu être fait en dur)"
             app:layout_constraintStart_toStartOf="@+id/guidelineL"
             app:layout_constraintEnd_toStartOf="@id/guidelineText"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toBottomOf="@id/bannerTitle" />
 
         <Button
             android:id="@+id/moreInformationsBtn"
@@ -55,10 +56,11 @@
             android:backgroundTint="@color/primary"
             android:paddingHorizontal="30dp"
             android:textAllCaps="false"
-            app:layout_constraintTop_toBottomOf="@id/description"
+            app:layout_constraintTop_toBottomOf="@id/bannerDescription"
             app:layout_constraintStart_toStartOf="@id/guidelineL"/>
         
         <ImageView
+            android:id="@+id/bannerImage"
             android:layout_width="100dp"
             android:layout_height="130dp"
             tools:srcCompat="@drawable/test_game1"
