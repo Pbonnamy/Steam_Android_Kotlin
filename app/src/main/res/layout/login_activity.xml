@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/loginTitle"
@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/loginBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -78,7 +78,7 @@
         app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
 
     <Button
-        android:id="@+id/subscribe"
+        android:id="@+id/registerBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -87,12 +87,12 @@
         android:backgroundTint="@color/primary"
         android:padding="12dp"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@id/login"
+        app:layout_constraintTop_toBottomOf="@id/loginBtn"
         app:layout_constraintStart_toStartOf="@id/guidelineL"
         app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
 
     <TextView
-        android:id="@+id/forgotPassword"
+        android:id="@+id/forgotPasswordBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/forgotPasswordBtn"
