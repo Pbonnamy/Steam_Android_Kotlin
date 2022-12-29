@@ -42,14 +42,14 @@ class MainActivity : AppCompatActivity() {
         this.setBestSalesContent()
     }
 
-    fun setBannerContent() {
+    private fun setBannerContent() {
         this.bannerTitle?.text = "Titan Fall 2\nUltimate Edition"
         this.bannerDescription?.text = "Une description d'un jeu mis en avant (peu être fait en dur)"
         this.bannerImage?.setImageResource(R.drawable.test_game1)
         this.bannerLayout?.setBackgroundResource(R.drawable.test_banner1)
     }
 
-    fun setBestSalesContent() {
+    private fun setBestSalesContent() {
         val games = mutableListOf<Game>();
 
         val game = Game(

@@ -26,4 +26,6 @@
     <string name="forgotPasswordBtn"><u>Mot de passe oublié</u></string>
     <string name="sendForgotPasswordBtn">Renvoyer le mot de passe</string>
     <string name="moreInformationsBtn">En savoir plus</string>
+    <string name="descriptionBtn">Description</string>
+    <string name="commentsBtn">Avis</string>
 </resources>
