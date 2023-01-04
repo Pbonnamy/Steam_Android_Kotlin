@@ -8,7 +8,6 @@ data class ListResponse(
     val editor: String,
     val urlImage: List<String>,
     val cover: String,
-    val description: String,
-    val price: String,
-    val type: String,
+    val description: String
 )
+

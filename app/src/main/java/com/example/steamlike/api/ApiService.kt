@@ -6,11 +6,7 @@ import com.example.steamlike.api.model.response.ListResponse
 import com.example.steamlike.api.model.response.UserSigninResponse
 import com.example.steamlike.api.model.response.UserSignupResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
     @POST("auth/signup")
@@ -26,5 +22,5 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("list/save/like/{steamId}")
-    suspend fun addLikeGame(@Path("steamId") steamId: Int): Response<List<ListResponse>>
+    suspend fun addLikeGame(@Path("steamId") steamId: Int, @Header("Authorization")  auth: String): Response<ListResponse>
 }

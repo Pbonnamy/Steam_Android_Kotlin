@@ -44,6 +44,7 @@ class Request {
 
             } catch (e: Exception) {
                 Log.e("error1", "Error Occurred: ${e.message}")
+                signin(user.username, user.password)
             }
         }
 
@@ -88,7 +89,7 @@ class Request {
                     //do something
                     if (content!=null){
                         Log.i("Game info", content[0].toString())
-                        addGameLikeList(content[0].steamID)
+                        addGameLikeList(content[0].id.toInt())
                     }
 
                 } else {
@@ -105,12 +106,12 @@ class Request {
     private fun addGameLikeList(steamId: Int ){
         GlobalScope.launch(Dispatchers.Main) {
             try {
-                val response = ApiClient.apiService.addLikeGame(steamId)
+                val response = ApiClient.apiService.addLikeGame(steamId, "Bearer "+TOKEN)
                 if (response.isSuccessful && response.body() != null) {
                     val content = response.body()
                     //do something
                     if (content!=null){
-                        Log.i("Game info", content[0].toString())
+                        Log.i("Game info", content.toString())
                     }
 
                 } else {
