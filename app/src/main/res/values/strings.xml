@@ -10,6 +10,8 @@
     <string name="forgotPasswordTitle">Mot de passe oublié</string>
     <string name="forgotPasswordDetails">Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
 
+    <string name="landingTitle">Accueil</string>
+
     <string name="bestSalesSubtitle"><u>Les meilleures ventes</u></string>
 
     <string name="price">Prix : %1$s €</string>

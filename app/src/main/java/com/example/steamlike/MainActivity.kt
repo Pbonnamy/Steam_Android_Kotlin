@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,9 @@ class MainActivity : AppCompatActivity() {
     private var bannerDescription: TextView? = null
     private var bannerImage: ImageView? = null
     private var bannerLayout: ConstraintLayout? = null
+    private var appbarTitle: TextView? = null
+    private var likeBtn : ImageButton? = null
+    private var wishlistBtn : ImageButton? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +36,16 @@ class MainActivity : AppCompatActivity() {
         this.bannerDescription = findViewById(R.id.bannerDescription)
         this.bannerImage = findViewById(R.id.bannerImage)
         this.bannerLayout = findViewById(R.id.bannerLayout)
+        this.appbarTitle = findViewById(R.id.appbarTitle)
+        this.likeBtn = findViewById(R.id.likeBtn)
+        this.wishlistBtn = findViewById(R.id.wishlistBtn)
 
         this.moreInformationsBtn?.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)
         }
 
+        this.handleAppBar()
         this.setBannerContent()
         this.setBestSalesContent()
     }
@@ -68,6 +76,20 @@ class MainActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.list).apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = ListAdapter(games)
+        }
+    }
+
+    private fun handleAppBar () {
+        this.appbarTitle?.text = getString(R.string.landingTitle)
+
+        this.likeBtn?.setOnClickListener {
+            val intent = Intent(this, LikeActivity::class.java)
+            startActivity(intent)
+        }
+
+        this.wishlistBtn?.setOnClickListener {
+            val intent = Intent(this, WishlistActivity::class.java)
+            startActivity(intent)
         }
     }
 
