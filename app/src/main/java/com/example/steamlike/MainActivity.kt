@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private var appbarTitle: TextView? = null
     private var likeBtn : ImageButton? = null
     private var wishlistBtn : ImageButton? = null
+    private var leftBtn : ImageButton? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         this.appbarTitle = findViewById(R.id.appbarTitle)
         this.likeBtn = findViewById(R.id.likeBtn)
         this.wishlistBtn = findViewById(R.id.wishlistBtn)
+        this.leftBtn = findViewById(R.id.leftBtn)
 
         this.moreInformationsBtn?.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
@@ -80,6 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleAppBar () {
+        this.leftBtn?.visibility = View.GONE
         this.appbarTitle?.text = getString(R.string.landingTitle)
 
         this.likeBtn?.setOnClickListener {

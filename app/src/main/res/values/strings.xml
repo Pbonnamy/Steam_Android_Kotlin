@@ -11,6 +11,9 @@
     <string name="forgotPasswordDetails">Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
 
     <string name="landingTitle">Accueil</string>
+    <string name="likeTitle">Mes likes</string>
+    <string name="wishlistTitle">Ma liste de souhaits</string>
+    <string name="detailsTitle">Détails d\'un jeu</string>
 
     <string name="bestSalesSubtitle"><u>Les meilleures ventes</u></string>
 

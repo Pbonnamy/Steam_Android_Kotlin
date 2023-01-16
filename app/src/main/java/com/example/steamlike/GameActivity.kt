@@ -1,5 +1,6 @@
 package com.example.steamlike
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
@@ -7,10 +8,7 @@ import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
@@ -30,6 +28,10 @@ class GameActivity : AppCompatActivity() {
     private var layout : LinearLayout? = null
     private var description: TextView? = null
     private var commentsList: RecyclerView? = null
+    private var appbarTitle: TextView? = null
+    private var likeBtn : ImageButton? = null
+    private var wishlistBtn : ImageButton? = null
+    private var leftBtn : ImageButton? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +45,12 @@ class GameActivity : AppCompatActivity() {
         this.descriptionBtn = findViewById(R.id.descriptionBtn)
         this.commentsBtn = findViewById(R.id.commentsBtn)
         this.layout = findViewById(R.id.layout)
+        this.appbarTitle = findViewById(R.id.appbarTitle)
+        this.likeBtn = findViewById(R.id.likeBtn)
+        this.wishlistBtn = findViewById(R.id.wishlistBtn)
+        this.leftBtn = findViewById(R.id.leftBtn)
+
+        this.handleAppBar()
 
         this.descriptionBtn?.setOnClickListener {
             if (this.description == null) {
@@ -86,6 +94,24 @@ class GameActivity : AppCompatActivity() {
 
         this.layout?.addView(description)
         this.description = description
+    }
+
+    private fun handleAppBar () {
+        this.leftBtn?.setBackgroundResource(R.drawable.back)
+        this.appbarTitle?.text = getString(R.string.detailsTitle)
+
+        this.leftBtn?.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        this.likeBtn?.setOnClickListener {
+            TODO()
+        }
+
+        this.wishlistBtn?.setOnClickListener {
+            TODO()
+        }
     }
 
     private fun setCommentsList() {
