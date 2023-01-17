@@ -11,11 +11,18 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.steamlike.api.ApiClient
+import com.example.steamlike.api.model.request.UserSignupRequest
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -51,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         this.handleAppBar()
         this.setBannerContent()
         this.setBestSalesContent()
+
     }
 
     private fun setBannerContent() {
@@ -143,4 +151,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }
