@@ -1,40 +1,43 @@
 package com.example.steamlike
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.steamlike.api.ApiClient
-import com.example.steamlike.api.Request
-import com.example.steamlike.api.model.request.UserSignupRequest
-import kotlinx.coroutines.DelicateCoroutinesApi
+import com.example.steamlike.api.model.request.UserSigninRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 class LoginActivity : AppCompatActivity() {
     private var loginBtn: Button? = null
     private var registerBtn: Button? = null
     private var forgotPasswordBtn: TextView? = null
+    private var emailInput: EditText? = null
+    private var passwordInput: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
-        Log.i("start", "test")
-        val test = Request()
-        test.start()
-
 
         this.loginBtn = findViewById(R.id.loginBtn)
         this.registerBtn = findViewById(R.id.registerBtn)
         this.forgotPasswordBtn = findViewById(R.id.forgotPasswordBtn)
+        this.emailInput = findViewById(R.id.email)
+        this.passwordInput = findViewById(R.id.password)
 
         this.loginBtn?.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            val request = UserSigninRequest(
+                username = this.emailInput?.text.toString(),
+                password = this.passwordInput?.text.toString()
+            )
+            this.signin(request)
         }
 
         this.registerBtn?.setOnClickListener {
@@ -46,8 +49,27 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
-
     }
 
+    private fun signin(request: UserSigninRequest) {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val response = ApiClient.apiService.authSignin(request)
 
+                if (response.isSuccessful && response.body() != null) {
+                    val content = response.body()
+
+                    val prefs: SharedPreferences = getSharedPreferences("values", MODE_PRIVATE)
+                    prefs.edit().putString("token", content?.accessToken).apply()
+
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Log.e("response", "Error Occurred: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                Log.e("error", "Error Occurred: ${e.message}")
+            }
+        }
+    }
 }

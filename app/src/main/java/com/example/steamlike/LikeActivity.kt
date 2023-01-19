@@ -32,6 +32,7 @@ class LikeActivity : AppCompatActivity() {
 
         this.handleAppBar()
         this.loadLikes()
+
     }
 
     private fun handleAppBar () {
