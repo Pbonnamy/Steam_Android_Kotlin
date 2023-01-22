@@ -5,5 +5,4 @@ data class UserSignupRequest(
     val email: String,
     val roles: List<String>,
     val password: String,
-
 )

@@ -1,6 +1,7 @@
 package com.example.steamlike
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -17,8 +18,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.steamlike.api.ApiClient
+import com.example.steamlike.api.model.request.UserSigninRequest
 import com.example.steamlike.api.model.request.UserSignupRequest
+import com.example.steamlike.api.model.response.GameResponse
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -58,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         this.handleAppBar()
         this.setBannerContent()
         this.setBestSalesContent()
-
     }
 
     private fun setBannerContent() {
@@ -69,24 +72,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBestSalesContent() {
-        val games = mutableListOf<Game>();
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val response = ApiClient.apiService.bestGameSells()
 
-        val game = Game(
-            "Nom du jeu",
-            "",
-            R.drawable.test_game2,
-            "Nom de l'éditeur",
-            10.00,
-            listOf(R.drawable.test_banner2)
-        )
+                if (response.isSuccessful && response.body() != null) {
+                    val content = response.body()
 
-        for (i in 0..5) {
-            games.add(game)
-        }
-
-        findViewById<RecyclerView>(R.id.list).apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = ListAdapter(games)
+                    findViewById<RecyclerView>(R.id.list).apply {
+                        layoutManager = LinearLayoutManager(this@MainActivity)
+                        adapter = GameListView.ListAdapter(content!!)
+                    }
+                } else {
+                    Toast.makeText(this@MainActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -104,53 +106,4 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-    class ListAdapter(private val games: List<Game>) : RecyclerView.Adapter<GameViewHolder>() {
-        override fun getItemCount(): Int = games.size
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
-            return GameViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.game_item, parent, false
-                )
-            )
-        }
-
-        override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-            holder.updateBooking(
-                games[position]
-            )
-        }
-    }
-
-    class GameViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
-        private val title = v.findViewById<TextView>(R.id.title)
-        private val editor = v.findViewById<TextView>(R.id.editor)
-        private val price = v.findViewById<TextView>(R.id.price)
-        private val image = v.findViewById<ImageView>(R.id.image)
-        private val background = v.findViewById<ImageView>(R.id.background)
-        private val currentContext = v.context
-        private val moreInformationsBtn = v.findViewById<Button>(R.id.moreInformationsBtn)
-
-        fun updateBooking(game: Game) {
-            title.text = game.title
-            editor.text = game.editor
-
-            val priceString = currentContext.getString(R.string.price, String.format("%.2f", game.price))
-            val spannable = SpannableString(priceString)
-            spannable.setSpan(UnderlineSpan(), 0, priceString.indexOf(":") - 1, 0)
-            price.text = spannable
-
-            image.setImageResource(game.image)
-            background.setImageResource(game.backgrounds[0])
-
-            moreInformationsBtn.setOnClickListener {
-                val intent = Intent(currentContext, GameActivity::class.java)
-                currentContext.startActivity(intent)
-            }
-        }
-    }
-
-
 }

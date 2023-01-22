@@ -17,7 +17,7 @@
 
     <string name="bestSalesSubtitle"><u>Les meilleures ventes</u></string>
 
-    <string name="price">Prix : %1$s €</string>
+    <string name="price">Prix : %1$s</string>
 
     <string name="emailHint">E-mail</string>
     <string name="passwordHint">Mot de passe</string>

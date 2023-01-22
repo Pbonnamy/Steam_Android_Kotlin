@@ -66,7 +66,7 @@ class LikeActivity : AppCompatActivity() {
 
         findViewById<RecyclerView>(R.id.list).apply {
             layoutManager = LinearLayoutManager(this@LikeActivity)
-            adapter = MainActivity.ListAdapter(games)
+            adapter = LikeActivity.ListAdapter(games)
         }
     }
 

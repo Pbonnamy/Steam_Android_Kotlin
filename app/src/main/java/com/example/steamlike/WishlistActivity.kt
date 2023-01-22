@@ -65,7 +65,7 @@ class WishlistActivity : AppCompatActivity() {
 
         findViewById<RecyclerView>(R.id.list).apply {
             layoutManager = LinearLayoutManager(this@WishlistActivity)
-            adapter = MainActivity.ListAdapter(games)
+            adapter = WishlistActivity.ListAdapter(games)
         }
     }
 

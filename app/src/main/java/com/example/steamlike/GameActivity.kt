@@ -3,8 +3,10 @@ package com.example.steamlike
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +14,18 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.marginTop
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.steamlike.api.ApiClient
+import com.example.steamlike.api.model.response.CommentResponse
+import com.example.steamlike.api.model.response.GameResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class GameActivity : AppCompatActivity() {
     private var mainBackground: ImageView? = null
@@ -32,6 +42,8 @@ class GameActivity : AppCompatActivity() {
     private var likeBtn : ImageButton? = null
     private var wishlistBtn : ImageButton? = null
     private var leftBtn : ImageButton? = null
+    private var game: GameResponse? = null
+    private var comments: List<CommentResponse>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +61,14 @@ class GameActivity : AppCompatActivity() {
         this.likeBtn = findViewById(R.id.likeBtn)
         this.wishlistBtn = findViewById(R.id.wishlistBtn)
         this.leftBtn = findViewById(R.id.leftBtn)
+
+        val sharedPref = this.getSharedPreferences("values", MODE_PRIVATE)
+        val gameId = sharedPref?.getString("gameId", null)
+
+        if (gameId == null) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         this.handleAppBar()
 
@@ -70,26 +90,41 @@ class GameActivity : AppCompatActivity() {
                     this.layout?.removeView(this.description)
                     this.description = null
                 }
-                this.setCommentsList()
+                this.setCommentsList(gameId!!)
             }
         }
 
-        this.setGameContent()
-        this.setGameDescription()
+        this.setGameContent(gameId!!)
     }
 
-    private fun setGameContent() {
-        this.mainBackground?.setImageResource(R.drawable.test_banner3)
-        this.bannerBackground?.setImageResource(R.drawable.test_banner4)
-        this.title?.text = "Nom du jeu"
-        this.editor?.text = "Nom de l'éditeur"
-        this.bannerImage?.setImageResource(R.drawable.test_game3)
+    private fun setGameContent(id: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val response = ApiClient.apiService.gameDetails(id)
+
+                if (response.isSuccessful && response.body() != null) {
+                    game = response.body()
+
+                    title?.text = game?.name
+                    editor?.text = game?.editor
+                    Glide.with(this@GameActivity).load(game?.urlImage?.get(0)).into(bannerBackground!!)
+                    Glide.with(this@GameActivity).load(game?.cover).into(bannerImage!!)
+                    Glide.with(this@GameActivity).load(game?.urlImage?.get(1)).into(mainBackground!!)
+
+                    this@GameActivity.setGameDescription()
+                } else {
+                    Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setGameDescription() {
-        var description: TextView = TextView(this)
+        var description = TextView(this)
         description.id = ViewCompat.generateViewId()
-        description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        description.text = HtmlCompat.fromHtml(game?.description!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
         description.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         this.layout?.addView(description)
@@ -114,59 +149,29 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun setCommentsList() {
-        var commentsList: RecyclerView = RecyclerView(this)
+    private fun setCommentsList(id: String) {
+        var commentsList = RecyclerView(this)
         commentsList.id = ViewCompat.generateViewId()
         this.layout?.addView(commentsList)
         this.commentsList = commentsList
 
-        val comments = mutableListOf<Comment>();
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val response = ApiClient.apiService.gameReviews(id)
 
-        val comment = Comment(
-            "Nom de l'utilisateur",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            5
-        )
+                if (response.isSuccessful && response.body() != null) {
+                    comments = response.body()
 
-        for (i in 0..5) {
-            comments.add(comment)
-        }
-
-        findViewById<RecyclerView>(commentsList.id).apply {
-            layoutManager = LinearLayoutManager(this@GameActivity)
-            adapter = ListAdapter(comments)
-        }
-    }
-
-    class ListAdapter(private val comments: List<Comment>) : RecyclerView.Adapter<CommentViewHolder>() {
-
-        override fun getItemCount(): Int = comments.size
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-            return CommentViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.comment_item, parent, false
-                )
-            )
-        }
-
-        override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-            holder.updateComment(
-                comments[position]
-            )
-        }
-    }
-
-    class CommentViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        private val username = v.findViewById<TextView>(R.id.username)
-        private val content = v.findViewById<TextView>(R.id.content)
-
-        fun updateComment(comment: Comment) {
-            var spannableUsername = SpannableString(comment.username)
-            spannableUsername.setSpan(UnderlineSpan(), 0, spannableUsername.length, 0)
-            username.text = spannableUsername
-
-            content.text = comment.content
+                    findViewById<RecyclerView>(commentsList.id).apply {
+                        layoutManager = LinearLayoutManager(this@GameActivity)
+                        adapter = CommentListView.ListAdapter(comments!!)
+                    }
+                } else {
+                    Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

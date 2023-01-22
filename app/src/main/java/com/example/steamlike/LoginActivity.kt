@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.steamlike.api.ApiClient
 import com.example.steamlike.api.model.request.UserSigninRequest
@@ -60,15 +61,17 @@ class LoginActivity : AppCompatActivity() {
                     val content = response.body()
 
                     val prefs: SharedPreferences = getSharedPreferences("values", MODE_PRIVATE)
-                    prefs.edit().putString("token", content?.accessToken).apply()
+                    prefs.edit().putString("token", "Bearer " + content?.accessToken).apply()
+
+                    Toast.makeText(this@LoginActivity, "Connexion réussie", Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Log.e("response", "Error Occurred: ${response.message()}")
+                    Toast.makeText(this@LoginActivity, "Identifiants invalides", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Log.e("error", "Error Occurred: ${e.message}")
+                Toast.makeText(this@LoginActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
             }
         }
     }
