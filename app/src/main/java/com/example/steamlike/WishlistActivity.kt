@@ -36,15 +36,13 @@ class WishlistActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("values", MODE_PRIVATE)
         var token = sharedPref.getString("token", null)
 
-        token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoZWxsbzEyMzQiLCJpYXQiOjE2NzQ0MDU5MDIsImV4cCI6MTY3NDQ5MjMwMn0.7Ty0_GM3eZTQg6Jnfi30XI1emtHrvYjSdiWOSHAqqmooyj1TpABVeVKSHRoV9q5kFKI4oBJqvAa87Y9Oxc2H2Q"
-
         if (token == null) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
         this.handleAppBar()
-        this.loadWishlist(token)
+        this.loadWishlist(token!!)
     }
 
     private fun handleAppBar () {
