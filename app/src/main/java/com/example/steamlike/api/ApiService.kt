@@ -26,8 +26,14 @@ interface ApiService {
     @GET("steam/details/{id}/fr")
     suspend fun gameDetails(@Path("id") id: String): Response<GameResponse>
 
-    @GET("steam/reviews/en/{id}/0/10")
+    @GET("steam/reviews/en/{id}/0/5")
     suspend fun gameReviews(@Path("id") id: String): Response<List<CommentResponse>>
+
+    @GET("list/all/likelist")
+    suspend fun listLikes(@Header("Authorization") auth: String): Response<List<GameResponse>>
+
+    @GET("list/all/whishlist")
+    suspend fun listWishlist(@Header("Authorization") auth: String): Response<List<GameResponse>>
 
     @Headers("Content-Type: application/json")
     @GET("steam/search/{term}")

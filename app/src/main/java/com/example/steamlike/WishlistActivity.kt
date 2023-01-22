@@ -4,16 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.steamlike.api.ApiClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class WishlistActivity : AppCompatActivity() {
     private var appbarTitle: TextView? = null
@@ -30,8 +33,18 @@ class WishlistActivity : AppCompatActivity() {
         this.wishlistBtn = findViewById(R.id.wishlistBtn)
         this.leftBtn = findViewById(R.id.leftBtn)
 
+        val sharedPref = getSharedPreferences("values", MODE_PRIVATE)
+        var token = sharedPref.getString("token", null)
+
+        token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoZWxsbzEyMzQiLCJpYXQiOjE2NzQ0MDU5MDIsImV4cCI6MTY3NDQ5MjMwMn0.7Ty0_GM3eZTQg6Jnfi30XI1emtHrvYjSdiWOSHAqqmooyj1TpABVeVKSHRoV9q5kFKI4oBJqvAa87Y9Oxc2H2Q"
+
+        if (token == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         this.handleAppBar()
-        this.loadWishlist()
+        this.loadWishlist(token)
     }
 
     private fun handleAppBar () {
@@ -47,71 +60,29 @@ class WishlistActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadWishlist() {
-        val games = mutableListOf<Game>();
+    private fun loadWishlist(token : String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val response = ApiClient.apiService.listWishlist(token)
 
-        val game = Game(
-            "Nom du jeu",
-            "",
-            R.drawable.test_game2,
-            "Nom de l'éditeur",
-            10.00,
-            listOf(R.drawable.test_banner2)
-        )
+                if (response.isSuccessful && response.body() != null) {
+                    val games = response.body()
+                    val size = games?.size
 
-        for (i in 0..10) {
-            games.add(game)
-        }
-
-        findViewById<RecyclerView>(R.id.list).apply {
-            layoutManager = LinearLayoutManager(this@WishlistActivity)
-            adapter = WishlistActivity.ListAdapter(games)
-        }
-    }
-
-    class ListAdapter(private val games: List<Game>) : RecyclerView.Adapter<GameViewHolder>() {
-        override fun getItemCount(): Int = games.size
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
-            return GameViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.game_item, parent, false
-                )
-            )
-        }
-
-        override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-            holder.updateBooking(
-                games[position]
-            )
-        }
-    }
-
-    class GameViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
-        private val title = v.findViewById<TextView>(R.id.title)
-        private val editor = v.findViewById<TextView>(R.id.editor)
-        private val price = v.findViewById<TextView>(R.id.price)
-        private val image = v.findViewById<ImageView>(R.id.image)
-        private val background = v.findViewById<ImageView>(R.id.background)
-        private val currentContext = v.context
-        private val moreInformationsBtn = v.findViewById<Button>(R.id.moreInformationsBtn)
-
-        fun updateBooking(game: Game) {
-            title.text = game.title
-            editor.text = game.editor
-
-            val priceString = currentContext.getString(R.string.price, String.format("%.2f", game.price))
-            val spannable = SpannableString(priceString)
-            spannable.setSpan(UnderlineSpan(), 0, priceString.indexOf(":") - 1, 0)
-            price.text = spannable
-
-            image.setImageResource(game.image)
-            background.setImageResource(game.backgrounds[0])
-
-            moreInformationsBtn.setOnClickListener {
-                val intent = Intent(currentContext, GameActivity::class.java)
-                currentContext.startActivity(intent)
+                    if (size!! > 0) {
+                        findViewById<RecyclerView>(R.id.list).apply {
+                            layoutManager = LinearLayoutManager(this@WishlistActivity)
+                            adapter = GameListView.ListAdapter(games!!)
+                        }
+                    } else {
+                        val emptyList = findViewById<ConstraintLayout>(R.id.noItems)
+                        emptyList.visibility = View.VISIBLE
+                    }
+                } else {
+                    Toast.makeText(this@WishlistActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@WishlistActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
             }
         }
     }
