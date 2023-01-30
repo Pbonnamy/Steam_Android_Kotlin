@@ -14,9 +14,11 @@ import com.bumptech.glide.Glide
 import com.example.steamlike.api.ApiClient
 import com.example.steamlike.api.model.response.CommentResponse
 import com.example.steamlike.api.model.response.GameDetailsResponse
+import com.example.steamlike.api.model.response.GameResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class GameActivity : AppCompatActivity() {
     private var mainBackground: ImageView? = null
@@ -103,8 +105,6 @@ class GameActivity : AppCompatActivity() {
                 if (response.isSuccessful && response.body() != null) {
                     game = response.body()
 
-                    Log.d("GameActivity", "Game: ${game.toString()}")
-
                     title?.text = game!!.gameDetails.name
                     editor?.text = game!!.gameDetails.editor
                     Glide.with(this@GameActivity).load(game!!.gameDetails.urlImage[0]).into(bannerBackground!!)
@@ -112,6 +112,7 @@ class GameActivity : AppCompatActivity() {
                     Glide.with(this@GameActivity).load(game!!.gameDetails.urlImage[1]).into(mainBackground!!)
 
                     this@GameActivity.setGameDescription()
+                    this@GameActivity.handleAppBarBtn(id, token)
                 } else {
                     Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
                 }
@@ -139,13 +140,78 @@ class GameActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun handleAppBarBtn(gameId: String, token: String) {
+        if (game!!.favorite) {
+            this.likeBtn?.setBackgroundResource(R.drawable.like_full)
+        } else {
+            this.likeBtn?.setBackgroundResource(R.drawable.like)
+        }
+
+        if (game!!.favorite) {
+            this.wishlistBtn?.setBackgroundResource(R.drawable.whishlist_full)
+        } else {
+            this.wishlistBtn?.setBackgroundResource(R.drawable.whishlist)
+        }
 
         this.likeBtn?.setOnClickListener {
-            TODO()
+            GlobalScope.launch(Dispatchers.Main) {
+                try {
+                    lateinit var response: Response<GameResponse>;
+
+                    if (game!!.favorite) {
+                        // Remove from favorite
+                    } else {
+                        response = ApiClient.apiService.addLikeGame(gameId, token)
+                    }
+
+                    if (response.isSuccessful && response.body() != null) {
+                        if (game!!.favorite) {
+                            game!!.favorite = false
+                            likeBtn?.setBackgroundResource(R.drawable.like)
+                        } else {
+                            game!!.favorite = true
+                            likeBtn?.setBackgroundResource(R.drawable.like_full)
+                        }
+                    } else {
+                        Log.d("ERROR", response.errorBody().toString())
+                        Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    Log.e("ERROR", e.message.toString())
+                    Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         this.wishlistBtn?.setOnClickListener {
-            TODO()
+            GlobalScope.launch(Dispatchers.Main) {
+                try {
+                    lateinit var response: Response<GameResponse>;
+
+                    if (game!!.wishList) {
+                        // TODO: remove from wishlist
+                    } else {
+                        response = ApiClient.apiService.addWishlistGame(gameId, token)
+                    }
+
+                    if (response.isSuccessful && response.body() != null) {
+                        if (game!!.wishList) {
+                            game!!.wishList = false
+                            wishlistBtn?.setBackgroundResource(R.drawable.whishlist)
+                        } else {
+                            game!!.wishList = true
+                            wishlistBtn?.setBackgroundResource(R.drawable.whishlist_full)
+                        }
+
+                    } else {
+                        Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

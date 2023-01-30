@@ -47,7 +47,6 @@ class LikeActivity : AppCompatActivity() {
         this.appbarTitle?.text = getString(R.string.likeTitle)
         this.leftBtn?.setBackgroundResource(R.drawable.close)
 
-
         this.leftBtn?.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

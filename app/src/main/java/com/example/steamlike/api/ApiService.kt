@@ -37,10 +37,14 @@ interface ApiService {
     suspend fun listWishlist(@Header("Authorization") auth: String): Response<List<GameResponse>>
 
     @Headers("Content-Type: application/json")
-    @GET("steam/search/{term}")
-    suspend fun searchGame(@Path("term") term : String): Response<List<GameResponse>>
+    @POST("list/save/like/{id}/fr")
+    suspend fun addLikeGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<GameResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("list/save/like/{steamId}")
-    suspend fun addLikeGame(@Path("steamId") steamId: Int, @Header("Authorization")  auth: String): Response<GameResponse>
+    @POST("list/save/wishlist/{id}/fr")
+    suspend fun addWishlistGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<GameResponse>
+
+    @Headers("Content-Type: application/json")
+    @GET("steam/search/{term}")
+    suspend fun searchGame(@Path("term") term : String): Response<List<GameResponse>>
 }

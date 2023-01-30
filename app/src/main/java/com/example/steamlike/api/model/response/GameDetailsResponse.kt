@@ -2,8 +2,8 @@ package com.example.steamlike.api.model.response
 
 data class GameDetailsResponse(
     val gameDetails: DetailsResponse,
-    val wishList: Boolean,
-    val favorite: Boolean
+    var wishList: Boolean,
+    var favorite: Boolean
 )
 
 data class DetailsResponse(
