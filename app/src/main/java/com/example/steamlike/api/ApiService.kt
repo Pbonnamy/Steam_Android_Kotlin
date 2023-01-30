@@ -20,11 +20,12 @@ interface ApiService {
     @POST("auth/lost")
     suspend fun lostPassword(@Body request : PasswordLostRequest): Response<PasswordLostResponse>
 
-    @GET("steam/GetMostPlayedGames/fr/0/10")
+    @GET("steam/GetMostPlayedGames/fr/0/6")
     suspend fun bestGameSells(): Response<List<GameResponse>>
 
     @GET("steam/details/{id}/fr")
-    suspend fun gameDetails(@Path("id") id: String): Response<GameResponse>
+    @Headers("Content-Type: application/json")
+    suspend fun gameDetails(@Path("id") id: String, @Header("Authorization") auth: String): Response<GameDetailsResponse>
 
     @GET("steam/reviews/en/{id}/0/5")
     suspend fun gameReviews(@Path("id") id: String): Response<List<CommentResponse>>

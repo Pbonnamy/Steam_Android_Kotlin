@@ -3,26 +3,17 @@ package com.example.steamlike
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.steamlike.api.ApiClient
 import com.example.steamlike.api.model.response.CommentResponse
-import com.example.steamlike.api.model.response.GameResponse
+import com.example.steamlike.api.model.response.GameDetailsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -42,7 +33,7 @@ class GameActivity : AppCompatActivity() {
     private var likeBtn : ImageButton? = null
     private var wishlistBtn : ImageButton? = null
     private var leftBtn : ImageButton? = null
-    private var game: GameResponse? = null
+    private var game: GameDetailsResponse? = null
     private var comments: List<CommentResponse>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,10 +54,17 @@ class GameActivity : AppCompatActivity() {
         this.leftBtn = findViewById(R.id.leftBtn)
 
         val sharedPref = this.getSharedPreferences("values", MODE_PRIVATE)
-        val gameId = sharedPref?.getString("gameId", null)
+        val gameId = sharedPref.getString("gameId", null)
 
         if (gameId == null) {
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        val token = sharedPref.getString("token", null)
+
+        if (token == null) {
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
@@ -94,22 +92,24 @@ class GameActivity : AppCompatActivity() {
             }
         }
 
-        this.setGameContent(gameId!!)
+        this.setGameContent(gameId!!, token!!)
     }
 
-    private fun setGameContent(id: String) {
+    private fun setGameContent(id: String, token: String) {
         GlobalScope.launch(Dispatchers.Main) {
             try {
-                val response = ApiClient.apiService.gameDetails(id)
+                val response = ApiClient.apiService.gameDetails(id, token)
 
                 if (response.isSuccessful && response.body() != null) {
                     game = response.body()
 
-                    title?.text = game?.name
-                    editor?.text = game?.editor
-                    Glide.with(this@GameActivity).load(game?.urlImage?.get(0)).into(bannerBackground!!)
-                    Glide.with(this@GameActivity).load(game?.cover).into(bannerImage!!)
-                    Glide.with(this@GameActivity).load(game?.urlImage?.get(1)).into(mainBackground!!)
+                    Log.d("GameActivity", "Game: ${game.toString()}")
+
+                    title?.text = game!!.gameDetails.name
+                    editor?.text = game!!.gameDetails.editor
+                    Glide.with(this@GameActivity).load(game!!.gameDetails.urlImage[0]).into(bannerBackground!!)
+                    Glide.with(this@GameActivity).load(game!!.gameDetails.cover).into(bannerImage!!)
+                    Glide.with(this@GameActivity).load(game!!.gameDetails.urlImage[1]).into(mainBackground!!)
 
                     this@GameActivity.setGameDescription()
                 } else {
@@ -124,7 +124,7 @@ class GameActivity : AppCompatActivity() {
     private fun setGameDescription() {
         var description = TextView(this)
         description.id = ViewCompat.generateViewId()
-        description.text = HtmlCompat.fromHtml(game?.description!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        description.text = HtmlCompat.fromHtml(game!!.gameDetails.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
         description.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         this.layout?.addView(description)
@@ -150,7 +150,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setCommentsList(id: String) {
-        var commentsList = RecyclerView(this)
+        val commentsList = RecyclerView(this)
         commentsList.id = ViewCompat.generateViewId()
         this.layout?.addView(commentsList)
         this.commentsList = commentsList

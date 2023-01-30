@@ -1,13 +1,8 @@
 package com.example.steamlike
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -15,15 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.steamlike.api.ApiClient
-import com.example.steamlike.api.model.request.UserSigninRequest
-import com.example.steamlike.api.model.request.UserSignupRequest
-import com.example.steamlike.api.model.response.GameResponse
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

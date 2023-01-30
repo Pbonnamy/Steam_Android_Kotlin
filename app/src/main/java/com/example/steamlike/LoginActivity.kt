@@ -3,7 +3,6 @@ package com.example.steamlike
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -35,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
         this.loginBtn?.setOnClickListener {
             val request = UserSigninRequest(
-                username = this.emailInput?.text.toString(),
+                email = this.emailInput?.text.toString(),
                 password = this.passwordInput?.text.toString()
             )
             this.signin(request)
