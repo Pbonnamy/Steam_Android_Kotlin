@@ -9,9 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.steamlike.api.ApiClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class WishlistActivity : AppCompatActivity() {
     private var appbarTitle: TextView? = null
@@ -54,9 +52,9 @@ class WishlistActivity : AppCompatActivity() {
     }
 
     private fun loadWishlist(token : String) {
-        GlobalScope.launch(Dispatchers.Main) {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = ApiClient.apiService.listWishlist(token)
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.listWishlist(token) }
 
                 if (response.isSuccessful && response.body() != null) {
                     val games = response.body()

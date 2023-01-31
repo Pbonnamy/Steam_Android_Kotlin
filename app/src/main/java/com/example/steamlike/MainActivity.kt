@@ -13,9 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.steamlike.api.ApiClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -61,9 +59,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBestSalesContent() {
-        GlobalScope.launch(Dispatchers.Main) {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = ApiClient.apiService.bestGameSells()
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.bestGameSells() }
 
                 if (response.isSuccessful && response.body() != null) {
                     val content = response.body()

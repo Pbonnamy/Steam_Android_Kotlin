@@ -9,9 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.steamlike.api.ApiClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class LikeActivity : AppCompatActivity() {
     private var appbarTitle: TextView? = null
@@ -38,7 +36,6 @@ class LikeActivity : AppCompatActivity() {
 
         this.handleAppBar()
         this.loadLikes(token!!);
-
     }
 
     private fun handleAppBar () {
@@ -54,9 +51,9 @@ class LikeActivity : AppCompatActivity() {
     }
 
     private fun loadLikes(token : String) {
-        GlobalScope.launch(Dispatchers.Main) {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = ApiClient.apiService.listLikes(token)
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.listLikes(token) }
 
                 if (response.isSuccessful && response.body() != null) {
                     val games = response.body()

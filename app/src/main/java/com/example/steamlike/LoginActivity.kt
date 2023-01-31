@@ -10,9 +10,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.steamlike.api.ApiClient
 import com.example.steamlike.api.model.request.UserSigninRequest
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class LoginActivity : AppCompatActivity() {
@@ -52,9 +53,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signin(request: UserSigninRequest) {
-        GlobalScope.launch(Dispatchers.Main) {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = ApiClient.apiService.authSignin(request)
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.authSignin(request) }
 
                 if (response.isSuccessful && response.body() != null) {
                     val content = response.body()

@@ -8,9 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.steamlike.api.ApiClient
 import com.example.steamlike.api.model.request.PasswordLostRequest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class ForgotPasswordActivity : AppCompatActivity() {
     private var forgotPasswordBtn: Button? = null
@@ -32,9 +30,9 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     private fun resetPassword(request: PasswordLostRequest) {
-        GlobalScope.launch(Dispatchers.Main) {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = ApiClient.apiService.lostPassword(request)
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.lostPassword(request) }
 
                 if (response.isSuccessful && response.body() != null) {
                     Toast.makeText(this@ForgotPasswordActivity, "Mot de passe réinitialisé", Toast.LENGTH_SHORT).show()

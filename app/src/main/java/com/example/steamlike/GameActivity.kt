@@ -15,9 +15,7 @@ import com.example.steamlike.api.ApiClient
 import com.example.steamlike.api.model.response.CommentResponse
 import com.example.steamlike.api.model.response.GameDetailsResponse
 import com.example.steamlike.api.model.response.GameResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.Response
 
 class GameActivity : AppCompatActivity() {
@@ -98,9 +96,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setGameContent(id: String, token: String) {
-        GlobalScope.launch(Dispatchers.Main) {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = ApiClient.apiService.gameDetails(id, token)
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameDetails(id, token) }
 
                 if (response.isSuccessful && response.body() != null) {
                     game = response.body()
@@ -156,14 +154,14 @@ class GameActivity : AppCompatActivity() {
         }
 
         this.likeBtn?.setOnClickListener {
-            GlobalScope.launch(Dispatchers.Main) {
+            CoroutineScope(Dispatchers.Main).launch {
                 try {
                     lateinit var response: Response<GameResponse>;
 
                     if (game!!.favorite) {
                         // Remove from favorite
                     } else {
-                        response = ApiClient.apiService.addLikeGame(gameId, token)
+                        response = withContext(Dispatchers.IO) { ApiClient.apiService.addLikeGame(gameId, token) }
                     }
 
                     if (response.isSuccessful && response.body() != null) {
@@ -175,25 +173,23 @@ class GameActivity : AppCompatActivity() {
                             likeBtn?.setBackgroundResource(R.drawable.like_full)
                         }
                     } else {
-                        Log.d("ERROR", response.errorBody().toString())
                         Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
-                    Log.e("ERROR", e.message.toString())
                     Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
         this.wishlistBtn?.setOnClickListener {
-            GlobalScope.launch(Dispatchers.Main) {
+            CoroutineScope(Dispatchers.Main).launch {
                 try {
                     lateinit var response: Response<GameResponse>;
 
                     if (game!!.wishList) {
                         // TODO: remove from wishlist
                     } else {
-                        response = ApiClient.apiService.addWishlistGame(gameId, token)
+                        response = withContext(Dispatchers.IO) { ApiClient.apiService.addWishlistGame(gameId, token) }
                     }
 
                     if (response.isSuccessful && response.body() != null) {
@@ -221,9 +217,9 @@ class GameActivity : AppCompatActivity() {
         this.layout?.addView(commentsList)
         this.commentsList = commentsList
 
-        GlobalScope.launch(Dispatchers.Main) {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = ApiClient.apiService.gameReviews(id)
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameReviews(id) }
 
                 if (response.isSuccessful && response.body() != null) {
                     comments = response.body()

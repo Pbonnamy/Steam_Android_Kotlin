@@ -18,7 +18,6 @@ import com.example.steamlike.api.model.response.GameResponse
 class GameListView {
     class ListAdapter(private val games: List<GameResponse>) : RecyclerView.Adapter<GameViewHolder>() {
         override fun getItemCount(): Int = games.size
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
             return GameViewHolder(
                 LayoutInflater.from(parent.context).inflate(
@@ -26,7 +25,6 @@ class GameListView {
                 )
             )
         }
-
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
             holder.updateList(
                 games[position]
@@ -35,7 +33,6 @@ class GameListView {
     }
 
     class GameViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         private val title = v.findViewById<TextView>(R.id.title)
         private val editor = v.findViewById<TextView>(R.id.editor)
         private val price = v.findViewById<TextView>(R.id.price)
@@ -43,7 +40,6 @@ class GameListView {
         private val background = v.findViewById<ImageView>(R.id.background)
         private val currentContext = v.context
         private val moreInformationsBtn = v.findViewById<Button>(R.id.moreInformationsBtn)
-
         fun updateList(game: GameResponse) {
             title.text = game.name
             editor.text = game.editor
