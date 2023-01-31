@@ -25,7 +25,11 @@ interface ApiService {
 
     @GET("steam/details/{id}/fr")
     @Headers("Content-Type: application/json")
-    suspend fun gameDetails(@Path("id") id: String, @Header("Authorization") auth: String): Response<GameDetailsResponse>
+    suspend fun gameDetails(@Path("id") id: String): Response<GameResponse>
+
+    @GET("steam/details/user/game/{id}/fr")
+    @Headers("Content-Type: application/json")
+    suspend fun userGameDetails(@Path("id") id: String, @Header("Authorization") auth: String): Response<GameDetailsResponse>
 
     @GET("steam/reviews/en/{id}/0/5")
     suspend fun gameReviews(@Path("id") id: String): Response<List<CommentResponse>>
@@ -43,6 +47,9 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("list/save/wishlist/{id}/fr")
     suspend fun addWishlistGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<GameResponse>
+
+    @DELETE("list/delete/{id}/fr")
+    suspend fun removeGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<Void>
 
     @Headers("Content-Type: application/json")
     @GET("steam/search/{term}")

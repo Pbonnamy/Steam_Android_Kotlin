@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +55,7 @@ class GameListView {
 
             moreInformationsBtn.setOnClickListener {
                 val prefs: SharedPreferences = currentContext.getSharedPreferences("values", AppCompatActivity.MODE_PRIVATE)
-                prefs.edit().putString("gameId", game.id).apply()
+                prefs.edit().putString("gameId", game.steamId).apply()
 
                 val intent = Intent(currentContext, GameActivity::class.java)
                 currentContext.startActivity(intent)

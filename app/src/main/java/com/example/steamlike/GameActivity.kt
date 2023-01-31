@@ -33,7 +33,8 @@ class GameActivity : AppCompatActivity() {
     private var likeBtn : ImageButton? = null
     private var wishlistBtn : ImageButton? = null
     private var leftBtn : ImageButton? = null
-    private var game: GameDetailsResponse? = null
+    private var game: GameResponse? = null
+    private var gameDetails: GameDetailsResponse? = null
     private var comments: List<CommentResponse>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,16 +99,16 @@ class GameActivity : AppCompatActivity() {
     private fun setGameContent(id: String, token: String) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameDetails(id, token) }
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameDetails(id) }
 
                 if (response.isSuccessful && response.body() != null) {
                     game = response.body()
 
-                    title?.text = game!!.gameDetails.name
-                    editor?.text = game!!.gameDetails.editor
-                    Glide.with(this@GameActivity).load(game!!.gameDetails.urlImage[0]).into(bannerBackground!!)
-                    Glide.with(this@GameActivity).load(game!!.gameDetails.cover).into(bannerImage!!)
-                    Glide.with(this@GameActivity).load(game!!.gameDetails.urlImage[1]).into(mainBackground!!)
+                    title?.text = game!!.name
+                    editor?.text = game!!.editor
+                    Glide.with(this@GameActivity).load(game!!.urlImage[0]).into(bannerBackground!!)
+                    Glide.with(this@GameActivity).load(game!!.cover).into(bannerImage!!)
+                    Glide.with(this@GameActivity).load(game!!.urlImage[1]).into(mainBackground!!)
 
                     this@GameActivity.setGameDescription()
                     this@GameActivity.handleAppBarBtn(id, token)
@@ -123,7 +124,7 @@ class GameActivity : AppCompatActivity() {
     private fun setGameDescription() {
         var description = TextView(this)
         description.id = ViewCompat.generateViewId()
-        description.text = HtmlCompat.fromHtml(game!!.gameDetails.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        description.text = HtmlCompat.fromHtml(game!!.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
         description.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         this.layout?.addView(description)
@@ -141,39 +142,39 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun handleAppBarBtn(gameId: String, token: String) {
-        if (game!!.favorite) {
-            this.likeBtn?.setBackgroundResource(R.drawable.like_full)
-        } else {
-            this.likeBtn?.setBackgroundResource(R.drawable.like)
-        }
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.userGameDetails(gameId, token) }
 
-        if (game!!.favorite) {
-            this.wishlistBtn?.setBackgroundResource(R.drawable.whishlist_full)
-        } else {
-            this.wishlistBtn?.setBackgroundResource(R.drawable.whishlist)
+                if (response.isSuccessful && response.body() != null) {
+                    gameDetails = response.body()
+
+                    if (gameDetails!!.like) {
+                        likeBtn?.setBackgroundResource(R.drawable.like_full)
+                    } else {
+                        likeBtn?.setBackgroundResource(R.drawable.like)
+                    }
+
+                    if (gameDetails!!.wishList) {
+                        wishlistBtn?.setBackgroundResource(R.drawable.whishlist_full)
+                    } else {
+                        wishlistBtn?.setBackgroundResource(R.drawable.whishlist)
+                    }
+                } else {
+                    Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
+            }
         }
 
         this.likeBtn?.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    lateinit var response: Response<GameResponse>;
-
-                    if (game!!.favorite) {
-                        // Remove from favorite
+                    if (gameDetails!!.like) {
+                        unLike(gameDetails!!.idLike!!, token)
                     } else {
-                        response = withContext(Dispatchers.IO) { ApiClient.apiService.addLikeGame(gameId, token) }
-                    }
-
-                    if (response.isSuccessful && response.body() != null) {
-                        if (game!!.favorite) {
-                            game!!.favorite = false
-                            likeBtn?.setBackgroundResource(R.drawable.like)
-                        } else {
-                            game!!.favorite = true
-                            likeBtn?.setBackgroundResource(R.drawable.like_full)
-                        }
-                    } else {
-                        Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                        like(game!!.steamId, token)
                     }
                 } catch (e: Exception) {
                     Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
@@ -184,30 +185,60 @@ class GameActivity : AppCompatActivity() {
         this.wishlistBtn?.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    lateinit var response: Response<GameResponse>;
 
-                    if (game!!.wishList) {
-                        // TODO: remove from wishlist
+                    if (gameDetails!!.wishList) {
+                        unWishList(gameDetails!!.idWishlist!!, token)
                     } else {
-                        response = withContext(Dispatchers.IO) { ApiClient.apiService.addWishlistGame(gameId, token) }
-                    }
-
-                    if (response.isSuccessful && response.body() != null) {
-                        if (game!!.wishList) {
-                            game!!.wishList = false
-                            wishlistBtn?.setBackgroundResource(R.drawable.whishlist)
-                        } else {
-                            game!!.wishList = true
-                            wishlistBtn?.setBackgroundResource(R.drawable.whishlist_full)
-                        }
-
-                    } else {
-                        Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                        wishList(game!!.steamId, token)
                     }
                 } catch (e: Exception) {
                     Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private suspend fun wishList (gameId: String, token: String) {
+        val response: Response<GameResponse> = withContext(Dispatchers.IO) { ApiClient.apiService.addWishlistGame(gameId, token) }
+
+        if (response.isSuccessful) {
+                gameDetails!!.wishList = true
+                wishlistBtn?.setBackgroundResource(R.drawable.whishlist_full)
+        } else {
+            Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private suspend fun unWishList (gameId: String, token: String) {
+        val response: Response<Void> = withContext(Dispatchers.IO) { ApiClient.apiService.removeGame(gameId, token) }
+
+        if (response.isSuccessful) {
+            gameDetails!!.wishList = false
+            wishlistBtn?.setBackgroundResource(R.drawable.whishlist)
+        } else {
+            Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private suspend fun like (gameId: String, token: String) {
+        val response: Response<GameResponse> = withContext(Dispatchers.IO) { ApiClient.apiService.addLikeGame(gameId, token) }
+
+        if (response.isSuccessful) {
+            gameDetails!!.like = true
+            likeBtn?.setBackgroundResource(R.drawable.like_full)
+        } else {
+            Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private suspend fun unLike (gameId: String, token: String) {
+        val response: Response<Void> = withContext(Dispatchers.IO) { ApiClient.apiService.removeGame(gameId, token) }
+
+        if (response.isSuccessful) {
+            gameDetails!!.like = false
+            likeBtn?.setBackgroundResource(R.drawable.like)
+        } else {
+            Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
         }
     }
 

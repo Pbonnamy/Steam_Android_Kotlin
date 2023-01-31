@@ -2,6 +2,7 @@ package com.example.steamlike.api.model.response
 
 data class GameResponse(
     val id: String,
+    val steamId: String,
     val name: String,
     val editor: String,
     val urlImage: List<String>,

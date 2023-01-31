@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="@string/descriptionBtn"
             android:textColor="@color/white"
-            android:background="@color/primary"
+            android:background="@drawable/bordered_button_primary"
             android:minHeight="35dp"
             android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@id/banner"
