@@ -56,7 +56,6 @@ class GameListView {
             moreInformationsBtn.setOnClickListener {
                 val prefs: SharedPreferences = currentContext.getSharedPreferences("values", AppCompatActivity.MODE_PRIVATE)
                 prefs.edit().putString("gameId", game.steamId).apply()
-                Log.d("GameListView", "Game id: ${game.steamId}")
 
                 val intent = Intent(currentContext, GameActivity::class.java)
                 currentContext.startActivity(intent)

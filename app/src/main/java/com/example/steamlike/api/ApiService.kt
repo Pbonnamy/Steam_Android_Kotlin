@@ -52,6 +52,6 @@ interface ApiService {
     suspend fun removeGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<Void>
 
     @Headers("Content-Type: application/json")
-    @GET("steam/search/{term}")
+    @GET("steam/search/fr/{term}")
     suspend fun searchGame(@Path("term") term : String): Response<List<GameResponse>>
 }

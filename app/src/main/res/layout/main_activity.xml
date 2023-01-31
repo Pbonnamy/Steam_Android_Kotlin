@@ -26,16 +26,29 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:drawableRight="@drawable/search"
+            android:drawableEnd="@drawable/search"
             android:drawableTint="@color/primary"
+            android:inputType="text"
+            android:singleLine="true"
             android:hint="@string/searchHint"
             android:background="@color/input"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:padding="8dp"
+            android:imeOptions="actionDone"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintStart_toStartOf="@id/guidelineL"
             app:layout_constraintEnd_toStartOf="@id/guidelineR"/>
+
+        <include
+            android:id="@+id/searchContainer"
+            layout="@layout/search_result"
+            android:layout_marginTop="15dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/search"
+            app:layout_constraintStart_toStartOf="@id/guidelineL"
+            app:layout_constraintEnd_toEndOf="@id/guidelineR"/>
 
         <include
             android:id="@+id/banner"

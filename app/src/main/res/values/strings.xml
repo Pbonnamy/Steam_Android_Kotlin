@@ -14,10 +14,12 @@
     <string name="likeTitle">Mes likes</string>
     <string name="wishlistTitle">Ma liste de souhaits</string>
     <string name="detailsTitle">Détails d\'un jeu</string>
+    <string name="searchTitle">Recherche</string>
 
     <string name="bestSalesSubtitle"><u>Les meilleures ventes</u></string>
 
     <string name="price">Prix : %1$s</string>
+    <string name="searchResult">Nombre de résultats : %1$s</string>
 
     <string name="emailHint">E-mail</string>
     <string name="passwordHint">Mot de passe</string>
