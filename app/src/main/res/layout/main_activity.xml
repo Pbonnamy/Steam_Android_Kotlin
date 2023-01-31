@@ -25,7 +25,7 @@
             android:id="@+id/search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:drawableEnd="@drawable/search"
             android:drawableTint="@color/primary"
             android:inputType="text"
