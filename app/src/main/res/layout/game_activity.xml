@@ -48,9 +48,10 @@
             android:layout_height="wrap_content"
             android:text="@string/descriptionBtn"
             android:textColor="@color/white"
-            android:background="@drawable/bordered_button_primary"
+            android:background="@color/primary"
             android:minHeight="35dp"
             android:layout_marginTop="20dp"
+            android:padding="10dp"
             app:layout_constraintTop_toBottomOf="@id/banner"
             app:layout_constraintStart_toEndOf="@id/guidelineL"
             app:layout_constraintEnd_toEndOf="@id/guidelineMiddle"/>
@@ -61,8 +62,9 @@
             android:layout_height="wrap_content"
             android:text="@string/commentsBtn"
             android:textColor="@color/white"
-            android:background="@color/primary"
+            android:background="@drawable/bordered_button_primary"
             android:minHeight="35dp"
+            android:padding="10dp"
             app:layout_constraintTop_toTopOf="@id/descriptionBtn"
             app:layout_constraintStart_toEndOf="@id/guidelineMiddle"
             app:layout_constraintEnd_toEndOf="@id/guidelineR"/>

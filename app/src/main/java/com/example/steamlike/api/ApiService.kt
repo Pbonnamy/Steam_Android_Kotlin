@@ -20,24 +20,24 @@ interface ApiService {
     @POST("auth/lost")
     suspend fun lostPassword(@Body request : PasswordLostRequest): Response<PasswordLostResponse>
 
-    @GET("steam/GetMostPlayedGames/fr/0/6")
+    @GET("steam/GetMostPlayedGames/fr/0/10")
     suspend fun bestGameSells(): Response<List<GameResponse>>
 
     @GET("steam/details/{id}/fr")
     @Headers("Content-Type: application/json")
     suspend fun gameDetails(@Path("id") id: String): Response<GameResponse>
 
-    @GET("steam/details/user/game/{id}/fr")
+    @GET("steam/details/user/game/{id}")
     @Headers("Content-Type: application/json")
     suspend fun userGameDetails(@Path("id") id: String, @Header("Authorization") auth: String): Response<GameDetailsResponse>
 
-    @GET("steam/reviews/en/{id}/0/5")
+    @GET("steam/reviews/en/{id}/0/10")
     suspend fun gameReviews(@Path("id") id: String): Response<List<CommentResponse>>
 
     @GET("list/all/likelist")
     suspend fun listLikes(@Header("Authorization") auth: String): Response<List<GameResponse>>
 
-    @GET("list/all/whishlist")
+    @GET("list/all/wishlist")
     suspend fun listWishlist(@Header("Authorization") auth: String): Response<List<GameResponse>>
 
     @Headers("Content-Type: application/json")
@@ -48,7 +48,7 @@ interface ApiService {
     @POST("list/save/wishlist/{id}/fr")
     suspend fun addWishlistGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<GameResponse>
 
-    @DELETE("list/delete/{id}/fr")
+    @DELETE("list/delete/{id}")
     suspend fun removeGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<Void>
 
     @Headers("Content-Type: application/json")

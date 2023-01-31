@@ -79,6 +79,9 @@ class GameActivity : AppCompatActivity() {
                     this.commentsList = null
                 }
 
+                this.commentsBtn?.background = ContextCompat.getDrawable(this, R.drawable.bordered_button_primary)
+                this.descriptionBtn?.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
+
                 this.setGameDescription()
             }
         }
@@ -89,6 +92,10 @@ class GameActivity : AppCompatActivity() {
                     this.layout?.removeView(this.description)
                     this.description = null
                 }
+
+                this.descriptionBtn?.background = ContextCompat.getDrawable(this, R.drawable.bordered_button_primary)
+                this.commentsBtn?.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
+
                 this.setCommentsList(gameId!!)
             }
         }
@@ -187,7 +194,7 @@ class GameActivity : AppCompatActivity() {
                 try {
 
                     if (gameDetails!!.wishList) {
-                        unWishList(gameDetails!!.idWishlist!!, token)
+                        unWishList(gameDetails!!.idWishList!!, token)
                     } else {
                         wishList(game!!.steamId, token)
                     }
