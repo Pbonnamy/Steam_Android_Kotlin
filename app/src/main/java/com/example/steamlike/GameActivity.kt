@@ -37,7 +37,7 @@ class GameActivity : AppCompatActivity() {
     private var comments: List<CommentResponse>? = null
     private var progressBarTop: ProgressBar? = null
     private var progressBarBottom: ProgressBar? = null
-    private var noComments: TextView? = null
+    private var noItem: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +57,7 @@ class GameActivity : AppCompatActivity() {
         this.leftBtn = findViewById(R.id.leftBtn)
         this.progressBarTop = findViewById(R.id.progressBarTop)
         this.progressBarBottom = findViewById(R.id.progressBarBottom)
-        this.noComments = findViewById(R.id.noComments)
+        this.noItem = findViewById(R.id.noItem)
 
         val sharedPref = this.getSharedPreferences("values", MODE_PRIVATE)
         val gameId = sharedPref.getString("gameId", null)
@@ -143,8 +143,13 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setGameDescription() {
-        noComments?.visibility = TextView.GONE
-        progressBarBottom?.visibility = ProgressBar.GONE
+        if (game!!.description.isEmpty()) {
+            noItem?.visibility = TextView.VISIBLE
+            noItem?.text = getString(R.string.noDescription)
+        } else {
+            noItem?.visibility = TextView.GONE
+        }
+
         var description = TextView(this)
         description.id = ViewCompat.generateViewId()
         description.text = HtmlCompat.fromHtml(game!!.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
@@ -281,7 +286,7 @@ class GameActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                noComments?.visibility = TextView.GONE
+                noItem?.visibility = TextView.GONE
                 progressBarBottom?.visibility = ProgressBar.VISIBLE
                 val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameReviews(id) }
 
@@ -295,7 +300,7 @@ class GameActivity : AppCompatActivity() {
                             adapter = CommentListView.ListAdapter(comments!!)
                         }
                     } else {
-                        noComments?.visibility = TextView.VISIBLE
+                        noItem?.visibility = TextView.VISIBLE
                     }
                 } else {
                     progressBarBottom?.visibility = ProgressBar.GONE

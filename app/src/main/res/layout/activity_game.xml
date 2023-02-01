@@ -40,10 +40,10 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/noComments"
+            android:id="@+id/noItem"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/noComments"
+            tools:text="@string/noComments"
             android:textSize="16sp"
             android:gravity="center"
             android:visibility="gone"
