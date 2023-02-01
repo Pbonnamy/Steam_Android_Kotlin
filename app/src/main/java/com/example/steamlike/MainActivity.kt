@@ -5,12 +5,12 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private var bannerDescription: TextView? = null
     private var bannerImage: ImageView? = null
     private var bannerBackground: ImageView? = null
-    private var bannerLayout: ConstraintLayout? = null
     private var appbarTitle: TextView? = null
     private var likeBtn : ImageButton? = null
     private var wishlistBtn : ImageButton? = null
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private var progressBarSearch: ProgressBar? = null
     private var progressBarSale: ProgressBar? = null
     private var progressBarBanner: ProgressBar? = null
+    private var banner: CardView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         this.bannerTitle = findViewById(R.id.bannerTitle)
         this.bannerDescription = findViewById(R.id.bannerDescription)
         this.bannerImage = findViewById(R.id.bannerImage)
-        this.bannerLayout = findViewById(R.id.bannerLayout)
         this.appbarTitle = findViewById(R.id.appbarTitle)
         this.likeBtn = findViewById(R.id.likeBtn)
         this.wishlistBtn = findViewById(R.id.wishlistBtn)
@@ -62,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         this.progressBarSale = findViewById(R.id.progressBarSale)
         this.bannerBackground = findViewById(R.id.bannerBackground)
         this.progressBarBanner = findViewById(R.id.progressBarBanner)
+        this.banner = findViewById(R.id.banner)
 
         this.moreInformationsBtn?.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
@@ -119,9 +119,9 @@ class MainActivity : AppCompatActivity() {
 
                 this.wishlistBtn?.visibility = View.GONE
                 this.likeBtn?.visibility = View.GONE
-                this.bannerLayout?.visibility = View.GONE
                 this.saleList?.visibility = View.GONE
                 this.saleTitle?.visibility = View.GONE
+                this.banner?.visibility = View.GONE
 
                 val searchTxt = searchInput?.text.toString()
                 search(searchTxt)
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
         this.wishlistBtn?.visibility = View.VISIBLE
         this.likeBtn?.visibility = View.VISIBLE
-        this.bannerLayout?.visibility = View.VISIBLE
+        this.banner?.visibility = View.VISIBLE
         this.saleList?.visibility = View.VISIBLE
         this.saleTitle?.visibility = View.VISIBLE
 
