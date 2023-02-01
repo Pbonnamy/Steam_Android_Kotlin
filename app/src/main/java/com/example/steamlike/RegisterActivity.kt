@@ -21,7 +21,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.resgister_activity)
+        setContentView(R.layout.activity_register)
 
         this.registerBtn = findViewById(R.id.subscribe)
         this.emailInput = findViewById(R.id.email)

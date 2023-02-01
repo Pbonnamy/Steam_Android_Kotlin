@@ -15,7 +15,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private var emailInput: EditText? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.forgot_password_activity)
+        setContentView(R.layout.activity_forgot_password)
 
         this.forgotPasswordBtn = findViewById(R.id.sendForgotPasswordBtn)
         this.emailInput = findViewById(R.id.email)

@@ -19,7 +19,7 @@ class WishlistActivity : AppCompatActivity() {
     private var progressBar: ProgressBar? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.wishlist_activity)
+        setContentView(R.layout.activity_wishlist)
 
         this.appbarTitle = findViewById(R.id.appbarTitle)
         this.likeBtn = findViewById(R.id.likeBtn)

@@ -3,7 +3,6 @@ package com.example.steamlike
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -42,7 +41,7 @@ class GameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.game_activity)
+        setContentView(R.layout.activity_game)
 
         this.mainBackground = findViewById(R.id.mainBackground)
         this.bannerBackground = findViewById(R.id.bannerBackground)

@@ -20,7 +20,7 @@ class LikeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.like_activity)
+        setContentView(R.layout.activity_like)
 
         this.appbarTitle = findViewById(R.id.appbarTitle)
         this.likeBtn = findViewById(R.id.likeBtn)
