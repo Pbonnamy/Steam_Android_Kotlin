@@ -37,6 +37,7 @@
     <string name="commentsBtn">Avis</string>
 
     <string name="noItems">Vous n\'avez pas encore liké de contenu.</string>
+    <string name="noComments">Aucun avis pour ce jeu.</string>
     <string name="wishlistHint">Cliquez sur l\'étoile pour en rajouter.</string>
     <string name="likeHint">Cliquez sur le coeur pour en rajouter.</string>
 </resources>

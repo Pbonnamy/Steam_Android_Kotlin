@@ -36,6 +36,9 @@ class GameActivity : AppCompatActivity() {
     private var game: GameResponse? = null
     private var gameDetails: GameDetailsResponse? = null
     private var comments: List<CommentResponse>? = null
+    private var progressBarTop: ProgressBar? = null
+    private var progressBarBottom: ProgressBar? = null
+    private var noComments: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,9 @@ class GameActivity : AppCompatActivity() {
         this.likeBtn = findViewById(R.id.likeBtn)
         this.wishlistBtn = findViewById(R.id.wishlistBtn)
         this.leftBtn = findViewById(R.id.leftBtn)
+        this.progressBarTop = findViewById(R.id.progressBarTop)
+        this.progressBarBottom = findViewById(R.id.progressBarBottom)
+        this.noComments = findViewById(R.id.noComments)
 
         val sharedPref = this.getSharedPreferences("values", MODE_PRIVATE)
         val gameId = sharedPref.getString("gameId", null)
@@ -106,10 +112,15 @@ class GameActivity : AppCompatActivity() {
     private fun setGameContent(id: String, token: String) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                progressBarBottom?.visibility = ProgressBar.VISIBLE
+                progressBarTop?.visibility = ProgressBar.VISIBLE
                 val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameDetails(id) }
 
                 if (response.isSuccessful && response.body() != null) {
                     game = response.body()
+
+                    progressBarBottom?.visibility = ProgressBar.GONE
+                    progressBarTop?.visibility = ProgressBar.GONE
 
                     title?.text = game!!.name
                     editor?.text = game!!.editor
@@ -120,15 +131,21 @@ class GameActivity : AppCompatActivity() {
                     this@GameActivity.setGameDescription()
                     this@GameActivity.handleAppBarBtn(id, token)
                 } else {
+                    progressBarBottom?.visibility = ProgressBar.GONE
+                    progressBarTop?.visibility = ProgressBar.GONE
                     Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
+                progressBarBottom?.visibility = ProgressBar.GONE
+                progressBarTop?.visibility = ProgressBar.GONE
                 Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun setGameDescription() {
+        noComments?.visibility = TextView.GONE
+        progressBarBottom?.visibility = ProgressBar.GONE
         var description = TextView(this)
         description.id = ViewCompat.generateViewId()
         description.text = HtmlCompat.fromHtml(game!!.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
@@ -151,6 +168,8 @@ class GameActivity : AppCompatActivity() {
     private fun handleAppBarBtn(gameId: String, token: String) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                likeBtn?.visibility = ImageButton.GONE
+                wishlistBtn?.visibility = ImageButton.GONE
                 val response = withContext(Dispatchers.IO) { ApiClient.apiService.userGameDetails(gameId, token) }
 
                 if (response.isSuccessful && response.body() != null) {
@@ -167,6 +186,9 @@ class GameActivity : AppCompatActivity() {
                     } else {
                         wishlistBtn?.setBackgroundResource(R.drawable.whishlist)
                     }
+
+                    likeBtn?.visibility = ImageButton.VISIBLE
+                    wishlistBtn?.visibility = ImageButton.VISIBLE
                 } else {
                     Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
                 }
@@ -178,11 +200,13 @@ class GameActivity : AppCompatActivity() {
         this.likeBtn?.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
+                    likeBtn?.isEnabled = false
                     if (gameDetails!!.like) {
                         unLike(gameDetails!!.idLike!!, token)
                     } else {
                         like(game!!.steamId, token)
                     }
+                    likeBtn?.isEnabled = true
                 } catch (e: Exception) {
                     Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
                 }
@@ -192,12 +216,13 @@ class GameActivity : AppCompatActivity() {
         this.wishlistBtn?.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
-
+                    wishlistBtn?.isEnabled = false
                     if (gameDetails!!.wishList) {
                         unWishList(gameDetails!!.idWishList!!, token)
                     } else {
                         wishList(game!!.steamId, token)
                     }
+                    wishlistBtn?.isEnabled = true
                 } catch (e: Exception) {
                     Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
                 }
@@ -257,19 +282,28 @@ class GameActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                noComments?.visibility = TextView.GONE
+                progressBarBottom?.visibility = ProgressBar.VISIBLE
                 val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameReviews(id) }
 
                 if (response.isSuccessful && response.body() != null) {
                     comments = response.body()
+                    progressBarBottom?.visibility = ProgressBar.GONE
 
-                    findViewById<RecyclerView>(commentsList.id).apply {
-                        layoutManager = LinearLayoutManager(this@GameActivity)
-                        adapter = CommentListView.ListAdapter(comments!!)
+                    if (comments!!.size > 0) {
+                        findViewById<RecyclerView>(commentsList.id).apply {
+                            layoutManager = LinearLayoutManager(this@GameActivity)
+                            adapter = CommentListView.ListAdapter(comments!!)
+                        }
+                    } else {
+                        noComments?.visibility = TextView.VISIBLE
                     }
                 } else {
+                    progressBarBottom?.visibility = ProgressBar.GONE
                     Toast.makeText(this@GameActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
+                progressBarBottom?.visibility = ProgressBar.GONE
                 Toast.makeText(this@GameActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
             }
         }

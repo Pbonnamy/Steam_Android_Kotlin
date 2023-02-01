@@ -16,7 +16,7 @@ class WishlistActivity : AppCompatActivity() {
     private var likeBtn : ImageButton? = null
     private var wishlistBtn : ImageButton? = null
     private var leftBtn : ImageButton? = null
-
+    private var progressBar: ProgressBar? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.wishlist_activity)
@@ -25,6 +25,7 @@ class WishlistActivity : AppCompatActivity() {
         this.likeBtn = findViewById(R.id.likeBtn)
         this.wishlistBtn = findViewById(R.id.wishlistBtn)
         this.leftBtn = findViewById(R.id.leftBtn)
+        this.progressBar = findViewById(R.id.progressBar)
 
         val sharedPref = getSharedPreferences("values", MODE_PRIVATE)
         var token = sharedPref.getString("token", null)
@@ -44,7 +45,6 @@ class WishlistActivity : AppCompatActivity() {
         this.appbarTitle?.text = getString(R.string.wishlistTitle)
         this.leftBtn?.setBackgroundResource(R.drawable.close)
 
-
         this.leftBtn?.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -54,11 +54,14 @@ class WishlistActivity : AppCompatActivity() {
     private fun loadWishlist(token : String) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                progressBar?.visibility = View.VISIBLE
                 val response = withContext(Dispatchers.IO) { ApiClient.apiService.listWishlist(token) }
 
                 if (response.isSuccessful && response.body() != null) {
                     val games = response.body()
                     val size = games?.size
+
+                    progressBar?.visibility = View.GONE
 
                     if (size!! > 0) {
                         findViewById<RecyclerView>(R.id.list).apply {
@@ -70,9 +73,11 @@ class WishlistActivity : AppCompatActivity() {
                         emptyList.visibility = View.VISIBLE
                     }
                 } else {
+                    progressBar?.visibility = View.GONE
                     Toast.makeText(this@WishlistActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
+                progressBar?.visibility = View.GONE
                 Toast.makeText(this@WishlistActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
             }
         }

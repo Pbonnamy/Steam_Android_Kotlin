@@ -13,6 +13,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/progressBarTop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:translationZ="10dp"
+            android:visibility="gone"
+            android:indeterminateTintMode="src_in"
+            android:indeterminateTint="@color/primary"
+            app:layout_constraintTop_toTopOf="@id/mainBackground"
+            app:layout_constraintBottom_toBottomOf="@id/mainBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBarBottom"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:translationZ="10dp"
+            android:visibility="gone"
+            android:indeterminateTintMode="src_in"
+            android:indeterminateTint="@color/primary"
+            app:layout_constraintTop_toBottomOf="@id/mainBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/noComments"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/noComments"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descriptionBtn" />
+
         <include
             android:id="@+id/appbar"
             layout="@layout/appbar"

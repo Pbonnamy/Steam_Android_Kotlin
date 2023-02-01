@@ -16,6 +16,7 @@ class LikeActivity : AppCompatActivity() {
     private var likeBtn : ImageButton? = null
     private var wishlistBtn : ImageButton? = null
     private var leftBtn : ImageButton? = null
+    private var progressBar: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,7 @@ class LikeActivity : AppCompatActivity() {
         this.likeBtn = findViewById(R.id.likeBtn)
         this.wishlistBtn = findViewById(R.id.wishlistBtn)
         this.leftBtn = findViewById(R.id.leftBtn)
+        this.progressBar = findViewById(R.id.progressBar)
 
         val sharedPref = getSharedPreferences("values", MODE_PRIVATE)
         var token = sharedPref.getString("token", null)
@@ -53,12 +55,14 @@ class LikeActivity : AppCompatActivity() {
     private fun loadLikes(token : String) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                progressBar?.visibility = View.VISIBLE
                 val response = withContext(Dispatchers.IO) { ApiClient.apiService.listLikes(token) }
 
                 if (response.isSuccessful && response.body() != null) {
                     val games = response.body()
                     val size = games?.size
 
+                    progressBar?.visibility = View.GONE
                     if (size!! > 0) {
                         findViewById<RecyclerView>(R.id.list).apply {
                             layoutManager = LinearLayoutManager(this@LikeActivity)
@@ -69,9 +73,11 @@ class LikeActivity : AppCompatActivity() {
                         emptyList.visibility = View.VISIBLE
                     }
                 } else {
+                    progressBar?.visibility = View.GONE
                     Toast.makeText(this@LikeActivity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
+                progressBar?.visibility = View.GONE
                 Toast.makeText(this@LikeActivity, "Service indisponible", Toast.LENGTH_SHORT).show()
             }
         }
