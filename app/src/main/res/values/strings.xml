@@ -41,4 +41,12 @@
     <string name="noDescription">Aucune description pour ce jeu.</string>
     <string name="wishlistHint">Cliquez sur l\'étoile pour en rajouter.</string>
     <string name="likeHint">Cliquez sur le coeur pour en rajouter.</string>
+
+    <string name="responseError">Une erreur est survenue</string>
+    <string name="apiError">Service indisponible</string>
+    <string name="loginError">E-mail ou mot de passe incorrect</string>
+    <string name="userNotFoundError">Utilisateur introuvable</string>
+    <string name="resetPassword">Mot de passe réinitialisé</string>
+    <string name="successRegister">Inscription réussie</string>
+    <string name="notSamePassword">Les mots de passes sont différents</string>
 </resources>

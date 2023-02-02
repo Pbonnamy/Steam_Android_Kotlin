@@ -102,11 +102,11 @@ class ListFragment : Fragment() {
                     }
                 } else {
                     progressBar?.visibility = View.GONE
-                    Toast.makeText(activity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.responseError), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 progressBar?.visibility = View.GONE
-                Toast.makeText(activity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.apiError), Toast.LENGTH_SHORT).show()
             }
         }
     }

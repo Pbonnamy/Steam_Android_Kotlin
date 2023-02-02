@@ -86,11 +86,11 @@ class LoginFormFragment: Fragment() {
                     startActivity(intent)
                 } else {
                     stopLoading()
-                    Toast.makeText(context, "Identifiants invalides", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.loginError), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 stopLoading()
-                Toast.makeText(context, "Service indisponible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.apiError), Toast.LENGTH_SHORT).show()
             }
         }
     }

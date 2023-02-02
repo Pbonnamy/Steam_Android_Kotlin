@@ -2,6 +2,7 @@ package com.example.steamlike.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class RegisterFormFragment: Fragment() {
     private var registerBtn: Button? = null
@@ -56,7 +58,7 @@ class RegisterFormFragment: Fragment() {
                 )
                 this.signup(request)
             } else {
-                Toast.makeText(context, "Les mots de passes sont différents", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.notSamePassword), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -68,18 +70,18 @@ class RegisterFormFragment: Fragment() {
                 val response = withContext(Dispatchers.IO) { ApiClient.apiService.authSignup(request) }
 
                 if (response.isSuccessful && response.body() != null) {
-                    Toast.makeText(activity, "Inscription réussie", Toast.LENGTH_SHORT).show()
-
                     stopLoading()
+                    Toast.makeText(activity, getString(R.string.successRegister), Toast.LENGTH_SHORT).show()
                     val intent = Intent(activity, LoginActivity::class.java)
                     startActivity(intent)
                 } else {
                     stopLoading()
-                    Toast.makeText(activity, "Champ(s) invalide(s)", Toast.LENGTH_SHORT).show()
+                    val jObjError = JSONObject(response.errorBody()!!.string())
+                    Toast.makeText(activity, jObjError.getString("message"), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 stopLoading()
-                Toast.makeText(activity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.apiError), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -135,12 +135,12 @@ class GameFragment : Fragment() {
                 } else {
                     progressBarBottom?.visibility = ProgressBar.GONE
                     progressBarTop?.visibility = ProgressBar.GONE
-                    Toast.makeText(activity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.responseError), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 progressBarBottom?.visibility = ProgressBar.GONE
                 progressBarTop?.visibility = ProgressBar.GONE
-                Toast.makeText(activity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.apiError), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -189,11 +189,11 @@ class GameFragment : Fragment() {
                     }
                 } else {
                     progressBarBottom?.visibility = ProgressBar.GONE
-                    Toast.makeText(activity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.responseError), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 progressBarBottom?.visibility = ProgressBar.GONE
-                Toast.makeText(activity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.apiError), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -97,10 +97,10 @@ class GameAppbarFragment : Fragment() {
                     handlelikeBtn(token, gameId)
                     handleWishlistBtn(token, gameId)
                 } else {
-                    Toast.makeText(activity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.responseError), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(activity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.apiError), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -118,7 +118,7 @@ class GameAppbarFragment : Fragment() {
                     }
                     wishlistBtn?.isEnabled = true
                 } catch (e: Exception) {
-                    Toast.makeText(activity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.apiError), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -138,7 +138,7 @@ class GameAppbarFragment : Fragment() {
                     }
                     likeBtn?.isEnabled = true
                 } catch (e: Exception) {
-                    Toast.makeText(activity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.apiError), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -151,7 +151,7 @@ class GameAppbarFragment : Fragment() {
             gameDetails!!.wishList = true
             wishlistBtn?.setBackgroundResource(R.drawable.whishlist_full)
         } else {
-            Toast.makeText(activity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, getString(R.string.responseError), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -162,7 +162,7 @@ class GameAppbarFragment : Fragment() {
             gameDetails!!.wishList = false
             wishlistBtn?.setBackgroundResource(R.drawable.whishlist)
         } else {
-            Toast.makeText(activity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, getString(R.string.responseError), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -173,7 +173,7 @@ class GameAppbarFragment : Fragment() {
             gameDetails!!.like = true
             likeBtn?.setBackgroundResource(R.drawable.like_full)
         } else {
-            Toast.makeText(activity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, getString(R.string.responseError), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -184,7 +184,7 @@ class GameAppbarFragment : Fragment() {
             gameDetails!!.like = false
             likeBtn?.setBackgroundResource(R.drawable.like)
         } else {
-            Toast.makeText(activity, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, getString(R.string.responseError), Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -52,15 +52,15 @@ class ForgotPasswordFormFragment : Fragment() {
                 val response = withContext(Dispatchers.IO) { ApiClient.apiService.lostPassword(request) }
 
                 if (response.isSuccessful && response.body() != null) {
-                    Toast.makeText(activity, "Mot de passe réinitialisé", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.resetPassword), Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(activity, LoginActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(activity, "Utilisateur introuvable", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.userNotFoundError), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(activity, "Service indisponible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(R.string.apiError), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -53,6 +53,15 @@ class CommentListView {
                 star.setColorFilter(ContextCompat.getColor(itemView.context, R.color.gold))
                 star.adjustViewBounds = true
                 star.scaleType = ImageView.ScaleType.CENTER_CROP
+
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                layoutParams.setMargins(20, 0, 0, 0)
+
+                star.setLayoutParams(layoutParams)
+
                 starContainer.addView(star)
             }
         }
