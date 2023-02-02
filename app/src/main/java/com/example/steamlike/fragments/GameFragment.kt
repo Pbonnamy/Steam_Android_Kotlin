@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -157,6 +158,8 @@ class GameFragment : Fragment() {
         val description = TextView(context)
         description.id = ViewCompat.generateViewId()
         description.text = HtmlCompat.fromHtml(game!!.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        val typeface = ResourcesCompat.getFont(requireContext(), R.font.proxima_regular)
+        description.setTypeface(typeface)
         description.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
 
         this.layout?.addView(description)

@@ -34,6 +34,7 @@
         <TextView
             android:id="@+id/bannerTitle"
             android:layout_width="0dp"
+            android:fontFamily="@font/google_bold"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -51,6 +52,7 @@
         <TextView
             android:id="@+id/bannerDescription"
             android:layout_width="0dp"
+            android:fontFamily="@font/google_regular"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="13sp"
@@ -73,6 +75,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/moreInformationsBtn"
             android:textColor="@color/white"
+            android:fontFamily="@font/google_regular"
             android:backgroundTint="@color/primary"
             android:paddingHorizontal="30dp"
             android:textAllCaps="false"

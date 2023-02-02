@@ -28,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Appbar"
+            android:fontFamily="@font/google_bold"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="18dp"
