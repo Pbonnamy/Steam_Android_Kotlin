@@ -1,6 +1,7 @@
 package com.example.steamlike.fragments
 
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import java.util.*
+
 
 class GameAppbarFragment : Fragment() {
     private var appbarTitle: TextView? = null
@@ -144,7 +147,7 @@ class GameAppbarFragment : Fragment() {
     }
 
     private suspend fun wishList (gameId: String, token: String) {
-        val response: Response<GameResponse> = withContext(Dispatchers.IO) { ApiClient.apiService.addWishlistGame(gameId, token) }
+        val response: Response<GameResponse> = withContext(Dispatchers.IO) { ApiClient.apiService.addWishlistGame(gameId, token, Locale.getDefault().getLanguage()) }
 
         if (response.isSuccessful) {
             gameDetails!!.wishList = true
@@ -166,7 +169,7 @@ class GameAppbarFragment : Fragment() {
     }
 
     private suspend fun like (gameId: String, token: String) {
-        val response: Response<GameResponse> = withContext(Dispatchers.IO) { ApiClient.apiService.addLikeGame(gameId, token) }
+        val response: Response<GameResponse> = withContext(Dispatchers.IO) { ApiClient.apiService.addLikeGame(gameId, token, Locale.getDefault().getLanguage()) }
 
         if (response.isSuccessful) {
             gameDetails!!.like = true

@@ -9,8 +9,8 @@ import retrofit2.http.*
 
 interface ApiService {
     @Headers("Content-Type: application/json")
-    @POST("auth/signup/fr")
-    suspend fun authSignup(@Body user: UserSignupRequest): Response<UserSignupResponse>
+    @POST("auth/signup/{lang}")
+    suspend fun authSignup(@Body user: UserSignupRequest, @Path("lang") lang: String): Response<UserSignupResponse>
 
     @Headers("Content-Type: application/json")
     @POST("auth/signin")
@@ -20,19 +20,19 @@ interface ApiService {
     @POST("auth/lost")
     suspend fun lostPassword(@Body request : PasswordLostRequest): Response<PasswordLostResponse>
 
-    @GET("steam/GetMostPlayedGames/fr/0/15")
-    suspend fun bestGameSells(): Response<List<GameResponse>>
+    @GET("steam/GetMostPlayedGames/{lang}/0/15")
+    suspend fun bestGameSells(@Path("lang") lang: String): Response<List<GameResponse>>
 
-    @GET("steam/details/{id}/fr")
+    @GET("steam/details/{id}/{lang}")
     @Headers("Content-Type: application/json")
-    suspend fun gameDetails(@Path("id") id: String): Response<GameResponse>
+    suspend fun gameDetails(@Path("id") id: String, @Path("lang") lang: String): Response<GameResponse>
 
     @GET("steam/details/user/game/{id}")
     @Headers("Content-Type: application/json")
     suspend fun userGameDetails(@Path("id") id: String, @Header("Authorization") auth: String): Response<GameDetailsResponse>
 
-    @GET("steam/reviews/en/{id}/0/10")
-    suspend fun gameReviews(@Path("id") id: String): Response<List<CommentResponse>>
+    @GET("steam/reviews/{lang}/{id}/0/10")
+    suspend fun gameReviews(@Path("id") id: String, @Path("lang") lang: String): Response<List<CommentResponse>>
 
     @GET("list/all/likelist")
     suspend fun listLikes(@Header("Authorization") auth: String): Response<List<GameResponse>>
@@ -41,17 +41,17 @@ interface ApiService {
     suspend fun listWishlist(@Header("Authorization") auth: String): Response<List<GameResponse>>
 
     @Headers("Content-Type: application/json")
-    @POST("list/save/like/{id}/fr")
-    suspend fun addLikeGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<GameResponse>
+    @POST("list/save/like/{id}/{lang}")
+    suspend fun addLikeGame(@Path("id") id: String, @Header("Authorization")  auth: String, @Path("lang") lang: String): Response<GameResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("list/save/wishlist/{id}/fr")
-    suspend fun addWishlistGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<GameResponse>
+    @POST("list/save/wishlist/{id}/{lang}")
+    suspend fun addWishlistGame(@Path("id") id: String, @Header("Authorization") auth: String, @Path("lang") lang: String): Response<GameResponse>
 
     @DELETE("list/delete/{id}")
     suspend fun removeGame(@Path("id") id: String, @Header("Authorization")  auth: String): Response<Void>
 
     @Headers("Content-Type: application/json")
-    @GET("steam/search/fr/{term}")
-    suspend fun searchGame(@Path("term") term : String): Response<List<GameResponse>>
+    @GET("steam/search/{lang}/{term}")
+    suspend fun searchGame(@Path("term") term : String, @Path("lang") lang: String): Response<List<GameResponse>>
 }

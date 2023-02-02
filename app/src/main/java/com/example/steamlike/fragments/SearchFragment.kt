@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class SearchFragment : Fragment() {
     private var searchInput : EditText? = null
@@ -61,7 +62,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun handleSearchBar() {
-        searchInput?.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+        searchInput?.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 this.appbarTitle?.text = getString(R.string.searchTitle)
                 this.leftBtn?.visibility = View.VISIBLE
@@ -89,7 +90,7 @@ class SearchFragment : Fragment() {
             try {
                 searchList?.visibility = View.GONE
                 progressBarSearch?.visibility = View.VISIBLE
-                val response = withContext(Dispatchers.IO) { ApiClient.apiService.searchGame(term) }
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.searchGame(term, Locale.getDefault().getLanguage()) }
 
                 if (response.isSuccessful && response.body() != null) {
                     val content = response.body()

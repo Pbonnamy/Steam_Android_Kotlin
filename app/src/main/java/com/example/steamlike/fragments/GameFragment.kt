@@ -23,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class GameFragment : Fragment() {
     private var progressBarTop: ProgressBar? = null
@@ -117,7 +118,7 @@ class GameFragment : Fragment() {
             try {
                 progressBarBottom?.visibility = ProgressBar.VISIBLE
                 progressBarTop?.visibility = ProgressBar.VISIBLE
-                val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameDetails(id) }
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameDetails(id, Locale.getDefault().getLanguage()) }
 
                 if (response.isSuccessful && response.body() != null) {
                     game = response.body()
@@ -172,7 +173,7 @@ class GameFragment : Fragment() {
             try {
                 noItem?.visibility = TextView.GONE
                 progressBarBottom?.visibility = ProgressBar.VISIBLE
-                val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameReviews(id) }
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.gameReviews(id, Locale.getDefault().getLanguage()) }
 
                 if (response.isSuccessful && response.body() != null) {
                     val comments = response.body()

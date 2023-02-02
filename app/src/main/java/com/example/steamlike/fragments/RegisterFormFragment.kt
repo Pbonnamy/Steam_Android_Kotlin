@@ -20,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.util.*
 
 class RegisterFormFragment: Fragment() {
     private var registerBtn: Button? = null
@@ -67,7 +68,7 @@ class RegisterFormFragment: Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 startLoading()
-                val response = withContext(Dispatchers.IO) { ApiClient.apiService.authSignup(request) }
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.authSignup(request, Locale.getDefault().getLanguage()) }
 
                 if (response.isSuccessful && response.body() != null) {
                     stopLoading()

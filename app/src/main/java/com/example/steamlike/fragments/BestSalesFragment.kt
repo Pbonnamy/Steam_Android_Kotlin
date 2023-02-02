@@ -16,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class BestSalesFragment: Fragment() {
     private var saleList: RecyclerView? = null
@@ -43,7 +44,7 @@ class BestSalesFragment: Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 progressBarSale?.visibility = View.VISIBLE
-                val response = withContext(Dispatchers.IO) { ApiClient.apiService.bestGameSells() }
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.bestGameSells(Locale.getDefault().getLanguage()) }
 
                 if (response.isSuccessful && response.body() != null) {
                     val content = response.body()

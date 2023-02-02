@@ -6,6 +6,12 @@ import com.example.steamlike.fragments.ListAppbarFragment
 import com.example.steamlike.fragments.ListFragment
 
 class ListActivity : AppCompatActivity() {
+
+    override fun onRestart() {
+        super.onRestart()
+        finish()
+        startActivity(intent)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)

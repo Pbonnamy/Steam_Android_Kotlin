@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class MainBannerFragment: Fragment() {
     private var progressBarBanner: ProgressBar? = null
@@ -55,7 +56,7 @@ class MainBannerFragment: Fragment() {
                 moreInformationsBtn?.visibility = View.GONE
                 progressBarBanner?.visibility = View.VISIBLE
                 val letter = ('a'..'z').random()
-                val response = withContext(Dispatchers.IO) { ApiClient.apiService.searchGame(letter.toString()) }
+                val response = withContext(Dispatchers.IO) { ApiClient.apiService.searchGame(letter.toString(), Locale.getDefault().getLanguage()) }
 
                 if (response.isSuccessful && response.body() != null) {
                     val content = response.body()

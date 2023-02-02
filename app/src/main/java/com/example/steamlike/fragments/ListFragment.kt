@@ -2,6 +2,7 @@ package com.example.steamlike.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,8 @@ class ListFragment : Fragment() {
         this.noItemTxt1 = view.findViewById(R.id.noItemTxt1)
         this.noItemTxt2 = view.findViewById(R.id.noItemTxt2)
 
+        this.list?.removeAllViews()
+        Log.e("ListFragment", "hello")
         this.type = arguments?.getString("type")
 
         val sharedPref = requireActivity().getSharedPreferences("values", AppCompatActivity.MODE_PRIVATE)
@@ -87,7 +90,7 @@ class ListFragment : Fragment() {
                     if (size!! > 0) {
                         list?.apply {
                             layoutManager = LinearLayoutManager(activity)
-                            adapter = GameListView.ListAdapter(games!!)
+                            adapter = GameListView.ListAdapter(games)
                         }
                     } else {
                         noItemTxt1?.text = getString(R.string.noItems)
