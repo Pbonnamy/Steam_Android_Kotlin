@@ -1,4 +1,4 @@
-package com.example.steamlike
+package com.example.steamlike.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.steamlike.ListActivity
+import com.example.steamlike.R
 
-class ListAppbarFragment : Fragment() {
+class MainAppbarFragment: Fragment() {
     private var appbarTitle: TextView? = null
     private var likeBtn : ImageButton? = null
     private var wishlistBtn : ImageButton? = null
     private var leftBtn : ImageButton? = null
-    private var titleActivity: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +23,7 @@ class ListAppbarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return LayoutInflater.from(requireContext())
-            .inflate(R.layout.appbar, container, false)
+            .inflate(R.layout.fragment_appbar, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,19 +34,20 @@ class ListAppbarFragment : Fragment() {
         this.wishlistBtn = view.findViewById(R.id.wishlistBtn)
         this.leftBtn = view.findViewById(R.id.leftBtn)
 
-        this.titleActivity = arguments?.getString("titleActivity")
-
         handleAppBar()
     }
 
     private fun handleAppBar () {
-        this.likeBtn?.visibility = View.GONE
-        this.wishlistBtn?.visibility = View.GONE
-        this.appbarTitle?.text = this.titleActivity
-        this.leftBtn?.setBackgroundResource(R.drawable.close)
+        this.leftBtn?.visibility = View.GONE
+        this.appbarTitle?.text = getString(R.string.landingTitle)
 
-        this.leftBtn?.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
+        this.likeBtn?.setOnClickListener {
+            val intent = Intent(activity, ListActivity::class.java).putExtra("type", "like")
+            startActivity(intent)
+        }
+
+        this.wishlistBtn?.setOnClickListener {
+            val intent = Intent(activity, ListActivity::class.java).putExtra("type", "wishlist")
             startActivity(intent)
         }
     }

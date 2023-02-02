@@ -20,7 +20,7 @@ interface ApiService {
     @POST("auth/lost")
     suspend fun lostPassword(@Body request : PasswordLostRequest): Response<PasswordLostResponse>
 
-    @GET("steam/GetMostPlayedGames/fr/0/10")
+    @GET("steam/GetMostPlayedGames/fr/0/15")
     suspend fun bestGameSells(): Response<List<GameResponse>>
 
     @GET("steam/details/{id}/fr")

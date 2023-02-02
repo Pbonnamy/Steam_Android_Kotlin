@@ -2,6 +2,8 @@ package com.example.steamlike
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.steamlike.fragments.ListAppbarFragment
+import com.example.steamlike.fragments.ListFragment
 
 class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.example.steamlike
+package com.example.steamlike.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.steamlike.listview.GameListView
+import com.example.steamlike.R
 import com.example.steamlike.api.ApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

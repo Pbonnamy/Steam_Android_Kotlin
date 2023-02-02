@@ -2,6 +2,7 @@ package com.example.steamlike
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.steamlike.fragments.LoginFormFragment
 
 
 class LoginActivity : AppCompatActivity() {

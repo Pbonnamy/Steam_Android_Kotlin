@@ -1,4 +1,4 @@
-package com.example.steamlike
+package com.example.steamlike.fragments
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,6 +9,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.steamlike.ForgotPasswordActivity
+import com.example.steamlike.MainActivity
+import com.example.steamlike.R
+import com.example.steamlike.RegisterActivity
 import com.example.steamlike.api.ApiClient
 import com.example.steamlike.api.model.request.UserSigninRequest
 import kotlinx.coroutines.CoroutineScope

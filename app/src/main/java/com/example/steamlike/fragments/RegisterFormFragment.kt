@@ -1,4 +1,4 @@
-package com.example.steamlike
+package com.example.steamlike.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.steamlike.LoginActivity
+import com.example.steamlike.R
 import com.example.steamlike.api.ApiClient
 import com.example.steamlike.api.model.request.UserSignupRequest
 import kotlinx.coroutines.CoroutineScope

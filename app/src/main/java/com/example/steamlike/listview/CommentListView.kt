@@ -1,8 +1,7 @@
-package com.example.steamlike
+package com.example.steamlike.listview
 
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.steamlike.R
 import com.example.steamlike.api.model.response.CommentResponse
 
 class CommentListView {
@@ -21,7 +21,7 @@ class CommentListView {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
             return CommentViewHolder(
                 LayoutInflater.from(parent.context).inflate(
-                    R.layout.comment_item, parent, false
+                    R.layout.game_comment, parent, false
                 )
             )
         }

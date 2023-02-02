@@ -1,4 +1,4 @@
-package com.example.steamlike
+package com.example.steamlike.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +14,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.steamlike.listview.GameListView
+import com.example.steamlike.LoginActivity
+import com.example.steamlike.R
 import com.example.steamlike.api.ApiClient
 import com.example.steamlike.api.model.response.GameResponse
 import kotlinx.coroutines.CoroutineScope
