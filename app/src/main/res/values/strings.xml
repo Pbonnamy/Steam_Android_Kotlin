@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Steam Like</string>
+    <string name="app_name">SteamLike</string>
 
     <string name="loginTitle">Bienvenue !</string>
     <string name="loginDetails">Veuillez vous connecter ou créer un nouveau compte pour utiliser l\'application.</string>
