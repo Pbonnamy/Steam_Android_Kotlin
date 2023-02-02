@@ -1,2 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">SteamLike</string>
+
+    <string name="loginTitle">Bienvenue !</string>
+    <string name="loginDetails">Veuillez vous connecter ou créer un nouveau compte pour utiliser l\'application.</string>
+
+    <string name="subscribeTitle">Inscription</string>
+    <string name="subscribeDetails">Veuillez saisir ces différentes informations, afin que vos listes soients sauvegardées.</string>
+
+    <string name="forgotPasswordTitle">Mot de passe oublié</string>
+    <string name="forgotPasswordDetails">Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
+
+    <string name="landingTitle">Accueil</string>
+    <string name="likeTitle">Mes likes</string>
+    <string name="wishlistTitle">Ma liste de souhaits</string>
+    <string name="detailsTitle">Détails d\'un jeu</string>
+    <string name="searchTitle">Recherche</string>
+
+    <string name="bestSalesSubtitle"><u>Les meilleures ventes</u></string>
+
+    <string name="price">Prix : %1$s</string>
+    <string name="searchResult">Nombre de résultats : %1$s</string>
+
+    <string name="emailHint">E-mail</string>
+    <string name="passwordHint">Mot de passe</string>
+    <string name="verifyPasswordHint">Vérification du mot de passe</string>
+    <string name="usernameHint">Nom d\'utilisateur</string>
+    <string name="searchHint">Rechercher un jeu...</string>
+
+    <string name="loginBtn">Se connecter</string>
+    <string name="newAccountBtn">Créer un nouveau compte</string>
+    <string name="subscribeBtn">S\'inscrire</string>
+    <string name="forgotPasswordBtn"><u>Mot de passe oublié</u></string>
+    <string name="sendForgotPasswordBtn">Renvoyer le mot de passe</string>
+    <string name="moreInformationsBtn">En savoir plus</string>
+    <string name="descriptionBtn">Description</string>
+    <string name="commentsBtn">Avis</string>
+
+    <string name="noItems">Vous n\'avez pas encore liké de contenu.</string>
+    <string name="noComments">Aucun avis pour ce jeu.</string>
+    <string name="noDescription">Aucune description pour ce jeu.</string>
+    <string name="wishlistHint">Cliquez sur l\'étoile pour en rajouter.</string>
+    <string name="likeHint">Cliquez sur le coeur pour en rajouter.</string>
+
+    <string name="responseError">Une erreur est survenue</string>
+    <string name="apiError">Service indisponible</string>
+    <string name="loginError">E-mail ou mot de passe incorrect</string>
+    <string name="userNotFoundError">Utilisateur introuvable</string>
+    <string name="resetPassword">Mot de passe réinitialisé</string>
+    <string name="successRegister">Inscription réussie</string>
+    <string name="notSamePassword">Les mots de passes sont différents</string>
+</resources>

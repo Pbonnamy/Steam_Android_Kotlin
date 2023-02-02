@@ -17,11 +17,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.appbar, MainAppbarFragment())
             .replace(R.id.banner, MainBannerFragment())
             .replace(R.id.bestSales, BestSalesFragment())
-            .commit()
-
-        supportFragmentManager.beginTransaction()
             .replace(R.id.searchContainer, SearchFragment())
             .commit()
-
     }
 }

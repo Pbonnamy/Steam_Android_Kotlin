@@ -1,52 +1,52 @@
 <resources>
     <string name="app_name">SteamLike</string>
 
-    <string name="loginTitle">Bienvenue !</string>
-    <string name="loginDetails">Veuillez vous connecter ou créer un nouveau compte pour utiliser l\'application.</string>
+    <string name="loginTitle">Welcome !</string>
+    <string name="loginDetails">Please login or create an account to use the app.</string>
 
-    <string name="subscribeTitle">Inscription</string>
-    <string name="subscribeDetails">Veuillez saisir ces différentes informations, afin que vos listes soients sauvegardées.</string>
+    <string name="subscribeTitle">Register</string>
+    <string name="subscribeDetails">Please fill these fields, so that we can save your lists.</string>
 
-    <string name="forgotPasswordTitle">Mot de passe oublié</string>
-    <string name="forgotPasswordDetails">Veuillez saisir votre email afin de réinitialiser votre mot de passe</string>
+    <string name="forgotPasswordTitle">Forgot Password</string>
+    <string name="forgotPasswordDetails">Please fill your email to reset your password</string>
 
-    <string name="landingTitle">Accueil</string>
-    <string name="likeTitle">Mes likes</string>
-    <string name="wishlistTitle">Ma liste de souhaits</string>
-    <string name="detailsTitle">Détails d\'un jeu</string>
-    <string name="searchTitle">Recherche</string>
+    <string name="landingTitle">Home</string>
+    <string name="likeTitle">My likes</string>
+    <string name="wishlistTitle">My wishlist</string>
+    <string name="detailsTitle">Game details</string>
+    <string name="searchTitle">Search</string>
 
-    <string name="bestSalesSubtitle"><u>Les meilleures ventes</u></string>
+    <string name="bestSalesSubtitle"><u>Best sales</u></string>
 
-    <string name="price">Prix : %1$s</string>
-    <string name="searchResult">Nombre de résultats : %1$s</string>
+    <string name="price">Price : %1$s</string>
+    <string name="searchResult">Number of results : %1$s</string>
 
     <string name="emailHint">E-mail</string>
-    <string name="passwordHint">Mot de passe</string>
-    <string name="verifyPasswordHint">Vérification du mot de passe</string>
-    <string name="usernameHint">Nom d\'utilisateur</string>
-    <string name="searchHint">Rechercher un jeu...</string>
+    <string name="passwordHint">Password</string>
+    <string name="verifyPasswordHint">Password confirmation</string>
+    <string name="usernameHint">Username</string>
+    <string name="searchHint">Search a game...</string>
 
-    <string name="loginBtn">Se connecter</string>
-    <string name="newAccountBtn">Créer un nouveau compte</string>
-    <string name="subscribeBtn">S\'inscrire</string>
-    <string name="forgotPasswordBtn"><u>Mot de passe oublié</u></string>
-    <string name="sendForgotPasswordBtn">Renvoyer le mot de passe</string>
-    <string name="moreInformationsBtn">En savoir plus</string>
+    <string name="loginBtn">Login</string>
+    <string name="newAccountBtn">Create a new account</string>
+    <string name="subscribeBtn">Register</string>
+    <string name="forgotPasswordBtn"><u>Forgot password</u></string>
+    <string name="sendForgotPasswordBtn">Send Password</string>
+    <string name="moreInformationsBtn">More information</string>
     <string name="descriptionBtn">Description</string>
-    <string name="commentsBtn">Avis</string>
+    <string name="commentsBtn">Reviews</string>
 
-    <string name="noItems">Vous n\'avez pas encore liké de contenu.</string>
-    <string name="noComments">Aucun avis pour ce jeu.</string>
-    <string name="noDescription">Aucune description pour ce jeu.</string>
-    <string name="wishlistHint">Cliquez sur l\'étoile pour en rajouter.</string>
-    <string name="likeHint">Cliquez sur le coeur pour en rajouter.</string>
+    <string name="noItems">You don\'t have any liked games yet.</string>
+    <string name="noComments">No reviews for this game.</string>
+    <string name="noDescription">No description for this game.</string>
+    <string name="wishlistHint">Click on the star to add one.</string>
+    <string name="likeHint">Click on the hearth to add one.</string>
 
-    <string name="responseError">Une erreur est survenue</string>
-    <string name="apiError">Service indisponible</string>
-    <string name="loginError">E-mail ou mot de passe incorrect</string>
-    <string name="userNotFoundError">Utilisateur introuvable</string>
-    <string name="resetPassword">Mot de passe réinitialisé</string>
-    <string name="successRegister">Inscription réussie</string>
-    <string name="notSamePassword">Les mots de passes sont différents</string>
+    <string name="responseError">Something went wrong</string>
+    <string name="apiError">Service unavailable</string>
+    <string name="loginError">Incorrect credentials</string>
+    <string name="userNotFoundError">user not found</string>
+    <string name="resetPassword">Password reset</string>
+    <string name="successRegister">Successful registration</string>
+    <string name="notSamePassword">The password are different</string>
 </resources>

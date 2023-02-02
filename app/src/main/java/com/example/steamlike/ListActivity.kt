@@ -8,7 +8,7 @@ import com.example.steamlike.fragments.ListFragment
 class ListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_like)
+        setContentView(R.layout.activity_list)
 
         val bundleAppbar = Bundle()
         val appbarFragment = ListAppbarFragment()

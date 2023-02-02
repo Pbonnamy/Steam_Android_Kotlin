@@ -47,8 +47,7 @@ class ListAppbarFragment : Fragment() {
         this.leftBtn?.setBackgroundResource(R.drawable.close)
 
         this.leftBtn?.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
+            activity?.finish()
         }
     }
 }

@@ -69,8 +69,7 @@ class GameAppbarFragment : Fragment() {
         this.appbarTitle?.text = getString(R.string.detailsTitle)
 
         this.leftBtn?.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
+            activity?.finish()
         }
 
         CoroutineScope(Dispatchers.Main).launch {

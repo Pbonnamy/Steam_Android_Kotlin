@@ -92,10 +92,10 @@ class ListFragment : Fragment() {
                     } else {
                         noItemTxt1?.text = getString(R.string.noItems)
                         if (type == "wishlist") {
-                            noItemImg?.setImageResource(R.drawable.whishlist_full)
+                            noItemImg?.setImageResource(R.drawable.empty_whishlist)
                             noItemTxt2?.text = getString(R.string.wishlistHint)
                         } else if (type == "like") {
-                            noItemImg?.setImageResource(R.drawable.like_full)
+                            noItemImg?.setImageResource(R.drawable.empty_likes)
                             noItemTxt2?.text = getString(R.string.likeHint)
                         }
                         noItems?.visibility = View.VISIBLE
