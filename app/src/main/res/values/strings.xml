@@ -44,7 +44,7 @@
 
     <string name="responseError">Something went wrong</string>
     <string name="apiError">Service unavailable</string>
-    <string name="loginError">Incorrect credentials</string>
+    <string name="loginError">Invalid credentials</string>
     <string name="userNotFoundError">user not found</string>
     <string name="resetPassword">Password reset</string>
     <string name="successRegister">Successful registration</string>
